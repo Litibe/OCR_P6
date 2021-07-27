@@ -1,0 +1,9 @@
+.nav {
+    padding-right: 6rem;
+    flex: 2 1 auto;
+    text-align: right;
+}
+
+h1 {
+    color : red;
+}
