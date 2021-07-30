@@ -1,0 +1,21 @@
+{
+  "name": "ocr_p6",
+  "version": "1.0.0",
+  "description": "projet ocr_p6",
+  "main": "index.js",
+  "scripts": {
+    "sass" : "sass --watch ../sass/main.scss:../css/style.css",
+    "prefix": "postcss ../css/style.css --use autoprefixer -d ../css/prefixed/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Litibe/OCR_P6.git"
+  },
+  "author": "Lionel TISSIER",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Litibe/OCR_P6/issues"
+  },
+  "homepage": "https://github.com/Litibe/OCR_P6#readme", 
+  "browserslist": "last 4 versions"
+}
