@@ -1,0 +1,15 @@
+
+
+@mixin background($imgpath,$repeat: no-repeat) {
+    background: {
+        image: url($imgpath);
+        repeat: $repeat;
+        color: #00000033;
+        size: cover;
+        attachment: fixed;
+    }
+}
+
+body{
+    @include background("../img/cinema-4609877_1280.jpg")
+}

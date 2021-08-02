@@ -1,0 +1,14 @@
+@import "../utils/variables";
+
+body{
+    font-family: "Rubik";
+}
+
+h1,h2,h3{
+    color: $color_heading;
+    text-align: center;
+}
+@mixin size_link_nav {
+    font-size: large;
+    font-weight: bold;
+}

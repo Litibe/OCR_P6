@@ -1,0 +1,38 @@
+@import "../utils/variables";
+@import "../layout/flex";
+
+header {
+    background-color: $color_header_div_row;
+    margin : -8px;
+    padding: 2px 5px 2px 30px;
+    border-bottom: 3px solid white;
+    max-height: 15%;
+    div.row {
+        @include flexrow_space_around;
+        div.logo{
+            max-height: 20%;
+        }
+        nav {
+            @include flexrow_space_around;
+            width: 50%;
+            margin: auto;
+            ul{
+                @include flexrow_space_around;
+                width: 100%;
+                height: 100%;
+                li{
+                    width: 100%;
+                    height: 100%;
+                    @include flexrow_space_around;
+                    a{
+                        color : $color_li_nav;
+                        @include size_link_nav;
+                        &:hover{
+                            color: $color_li_nav_hover;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

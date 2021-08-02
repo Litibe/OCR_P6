@@ -1,3 +1,96 @@
+body {
+  background-image: url("../img/cinema-4609877_1280.jpg");
+  background-repeat: no-repeat;
+  background-color: #00000033;
+  background-size: cover;
+  background-attachment: fixed;
+}
 
+body {
+  font-family: "Rubik";
+}
+
+h1, h2, h3 {
+  color: white;
+  text-align: center;
+}
+
+header {
+  background-color: rgba(100, 24, 24, 0.897);
+  margin: -8px;
+  padding: 2px 5px 2px 30px;
+  border-bottom: 3px solid white;
+  max-height: 15%;
+}
+header div.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+}
+header div.row div.logo {
+  max-height: 20%;
+}
+header div.row nav {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  width: 50%;
+  margin: auto;
+}
+header div.row nav ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  width: 100%;
+  height: 100%;
+}
+header div.row nav ul li {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+}
+header div.row nav ul li a {
+  color: #f1d297;
+  font-size: large;
+  font-weight: bold;
+}
+header div.row nav ul li a:hover {
+  color: #a2fda2;
+}
+
+body div.container {
+  background-color: rgba(31, 11, 11, 0.603);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-content: space-around;
+  width: 95%;
+  margin: auto;
+  margin-top: 20px;
+}
+
+section {
+  margin: 5px;
+  padding: 5px;
+  border: 2px solid #811c1c;
+}
+
+footer {
+  background-color: #3a0909;
+  color: white;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 25px;
+  margin-bottom: -10px;
+  padding-bottom: 20px;
+  text-align: center;
+}
 
 /*# sourceMappingURL=style.css.map */

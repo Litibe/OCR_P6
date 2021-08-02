@@ -1,0 +1,13 @@
+body div.container{
+    background-color: rgba(31, 11, 11, 0.603);
+    @include flexcolumn_space_around;
+    width: 95%;
+    margin:auto ;
+    margin-top: 20px;
+}
+
+section{
+    margin: 5px;
+    padding: 5px;
+    border: 2px solid $color_border_section;
+}
