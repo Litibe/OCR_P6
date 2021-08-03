@@ -2,22 +2,30 @@
 @import "../layout/flex";
 
 header {
+    position: fixed;
     background-color: $color_header_div_row;
     margin : -8px;
     padding: 2px 5px 2px 30px;
     border-bottom: 3px solid white;
-    max-height: 15%;
+    width: 100%;
     div.row {
         @include flexrow_space_around;
         div.logo{
-            max-height: 20%;
+            width: 10%;
+            img{
+                width: 90%;
+                max-width: 90px;
+                max-height: 60px;
+                margin: auto
+            }
         }
         nav {
-            @include flexrow_space_around;
-            width: 50%;
+            @include flexrow_center_center;
             margin: auto;
+            width: 80%;
             ul{
-                @include flexrow_space_around;
+                @include flexrow_center_center;
+                margin-left: -60px;
                 width: 100%;
                 height: 100%;
                 li{

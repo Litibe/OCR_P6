@@ -3,11 +3,12 @@ body div.container{
     @include flexcolumn_space_around;
     width: 95%;
     margin:auto ;
-    margin-top: 20px;
+    margin-top: 15%;
 }
 
 section{
     margin: 5px;
     padding: 5px;
     border: 2px solid $color_border_section;
+    height: 250px;
 }
