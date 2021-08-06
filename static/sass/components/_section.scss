@@ -1,10 +1,10 @@
 .container{
     @include flexcolumn_space_around;
-    width: 95%;
+    width: 90%;
     margin:auto ;
-    margin-top: 3%;
+    margin-top: 0%;
     section{
-        width: 90%;
+        width: 100%;
         background-color: rgba(245, 226, 199, 0.938);
         border: 2px solid $color_border_section;
         margin: 5px;

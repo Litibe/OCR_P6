@@ -11,8 +11,12 @@ body{
     font-family: "Rubik";
 }
 
-h1,h2, h3{
-    @include style_h()
+h1 {
+    @include style_h();
+    margin-top: 8%;
+}
+h2, h3 {
+    @include style_h();
 }
 
 h3.title_movie{

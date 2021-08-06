@@ -10,7 +10,15 @@ body {
   font-family: "Rubik";
 }
 
-h1, h2, h3 {
+h1 {
+  padding: -5px;
+  color: white;
+  text-align: center;
+  text-shadow: 2px 2px 12px black;
+  margin-top: 8%;
+}
+
+h2, h3 {
   padding: -5px;
   color: white;
   text-align: center;
@@ -37,7 +45,11 @@ h3.title_movie {
   height: 12%;
   min-height: 10%;
   border-radius: 8px;
+  border: 3px solid #e7912f;
   background-color: #e7912f;
+}
+.info_movie:hover {
+  background-color: white;
 }
 
 header {
@@ -102,12 +114,12 @@ header div.row nav ul li a:hover {
   flex-direction: column;
   justify-content: space-around;
   align-content: space-around;
-  width: 95%;
+  width: 90%;
   margin: auto;
-  margin-top: 3%;
+  margin-top: 0%;
 }
 .container section {
-  width: 90%;
+  width: 100%;
   background-color: rgba(245, 226, 199, 0.938);
   border: 2px solid #811c1c;
   margin: 5px;
@@ -135,6 +147,10 @@ footer {
   margin-bottom: -10px;
   padding-bottom: 30px;
   text-align: center;
+}
+
+.p5 {
+  padding: 0px 15px 5px 15px;
 }
 
 /*# sourceMappingURL=style.css.map */
