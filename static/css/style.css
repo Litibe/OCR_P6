@@ -1,7 +1,7 @@
 body {
   background-image: url("../img/cinema-4609877_1280.jpg");
   background-repeat: no-repeat;
-  background-color: #00000033;
+  background-color: #662525b0;
   background-size: cover;
   background-attachment: fixed;
 }
@@ -11,15 +11,40 @@ body {
 }
 
 h1, h2, h3 {
+  padding: -5px;
   color: white;
   text-align: center;
+  text-shadow: 2px 2px 12px black;
+}
+
+h3.title_movie {
+  padding: -5px;
+  color: #4b38f1;
+  text-align: center;
+  text-shadow: 2px 2px 12px white;
+  border: solid 3px #4b38f1;
+  padding: 10px;
+}
+
+.btn_margin_auto {
+  margin: auto;
+}
+
+.info_movie {
+  text-align: center;
+  width: 40%;
+  min-width: 18%;
+  height: 12%;
+  min-height: 10%;
+  border-radius: 8px;
+  background-color: #e7912f;
 }
 
 header {
   position: fixed;
   background-color: rgba(100, 24, 24, 0.897);
   margin: -8px;
-  padding: 2px 5px 2px 30px;
+  padding: 2px 5px 2px 10px;
   border-bottom: 3px solid white;
   width: 100%;
 }
@@ -72,22 +97,32 @@ header div.row nav ul li a:hover {
   color: #a2fda2;
 }
 
-body div.container {
-  background-color: rgba(31, 11, 11, 0.603);
+.container {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
   align-content: space-around;
   width: 95%;
   margin: auto;
-  margin-top: 15%;
+  margin-top: 3%;
 }
-
-section {
-  margin: 5px;
-  padding: 5px;
+.container section {
+  width: 90%;
+  background-color: rgba(245, 226, 199, 0.938);
   border: 2px solid #811c1c;
-  height: 250px;
+  margin: 5px;
+}
+.container section .container .oneline {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  margin: 5px;
+  color: burlywood;
+  color: #383333;
+}
+.container section .container .oneline .descriptions {
+  margin: 5px;
 }
 
 footer {

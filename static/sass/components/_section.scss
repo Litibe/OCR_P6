@@ -1,14 +1,28 @@
-body div.container{
-    background-color: rgba(31, 11, 11, 0.603);
+.container{
     @include flexcolumn_space_around;
     width: 95%;
     margin:auto ;
-    margin-top: 15%;
+    margin-top: 3%;
+    section{
+        width: 90%;
+        background-color: rgba(245, 226, 199, 0.938);
+        border: 2px solid $color_border_section;
+        margin: 5px;
+        .container{
+            .oneline{
+                @include flexrow_space_around;
+                margin: 5px;
+                color:burlywood;
+                color: rgb(56, 51, 51);
+                .descriptions{
+                    margin: 5px;
+                }
+            }
+        }
+    }
 }
 
-section{
-    margin: 5px;
-    padding: 5px;
-    border: 2px solid $color_border_section;
-    height: 250px;
-}
+
+
+
+

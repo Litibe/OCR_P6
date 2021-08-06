@@ -2,9 +2,9 @@
 
 @mixin background($imgpath,$repeat: no-repeat) {
     background: {
-        image: url($imgpath);
+        image: url($imgpath) ;
         repeat: $repeat;
-        color: #00000033;
+        color: #662525b0;
         size: cover;
         attachment: fixed;
     }

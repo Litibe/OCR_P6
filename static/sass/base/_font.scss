@@ -1,12 +1,24 @@
 @import "../utils/variables";
 
+@mixin style_h ($color_text: $color_heading, $color_shadow : black) {
+    padding: -5px;
+    color: $color_text;
+    text-align: center;
+    text-shadow: 2px 2px 12px  $color_shadow;
+}
+
 body{
     font-family: "Rubik";
 }
 
-h1,h2,h3{
-    color: $color_heading;
-    text-align: center;
+h1,h2, h3{
+    @include style_h()
+}
+
+h3.title_movie{
+    @include style_h(#4b38f1, white);
+    border : solid 3px #4b38f1;
+    padding: 10px;
 }
 @mixin size_link_nav {
     font-size: large;
