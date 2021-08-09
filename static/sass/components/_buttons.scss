@@ -1,8 +1,19 @@
-.btn_margin_auto{
-    margin: auto;
-}
+@import "../layout/flex";
 
-.btn_info_movie{
+.btn{
+    &_carroussel{
+        margin: auto;
+        &_left{
+            color: orange;
+            &:hover{
+                cursor : pointer ; 
+                
+            }
+        }
+    }
+    &_margin_auto{
+        margin: auto;}
+    &_info_movie{
     text-align: center;
     width: 40%;
     min-width: 18%;
@@ -11,8 +22,9 @@
     border-radius: 8px;
     border: 3px solid rgb(231, 145, 47);
     background-color: rgb(231, 145, 47);
-    &:hover{
-        background-color: white;
+        &:hover{
+            background-color: white;
+            }
     }
 }
 

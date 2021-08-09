@@ -24,10 +24,22 @@
                 }
             }
         }
+        .carroussel{
+            width: 90%;
+            & h3 {
+                height: 20px;
+                text-align: center;
+            }
+        }
     }
 }
 
 
+.row{
+    @include flexrow_space_around;
+}
 
 
-
+.color{
+    background-color: aquamarine;
+}

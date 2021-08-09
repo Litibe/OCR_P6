@@ -34,10 +34,18 @@ h3.title_movie {
   padding: 10px;
 }
 
+.btn_carroussel {
+  margin: auto;
+}
+.btn_carroussel_left {
+  color: orange;
+}
+.btn_carroussel_left:hover {
+  cursor: pointer;
+}
 .btn_margin_auto {
   margin: auto;
 }
-
 .btn_info_movie {
   text-align: center;
   width: 40%;
@@ -142,6 +150,24 @@ header div.row nav ul li a:hover {
 .container section .container .oneline .movie {
   width: 65%;
   margin: 5px;
+}
+.container section .carroussel {
+  width: 90%;
+}
+.container section .carroussel h3 {
+  height: 20px;
+  text-align: center;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+}
+
+.color {
+  background-color: aquamarine;
 }
 
 footer {
