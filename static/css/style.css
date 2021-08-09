@@ -38,7 +38,7 @@ h3.title_movie {
   margin: auto;
 }
 
-.info_movie {
+.btn_info_movie {
   text-align: center;
   width: 40%;
   min-width: 18%;
@@ -48,8 +48,12 @@ h3.title_movie {
   border: 3px solid #e7912f;
   background-color: #e7912f;
 }
-.info_movie:hover {
+.btn_info_movie:hover {
   background-color: white;
+}
+
+.hidden {
+  display: none;
 }
 
 header {
@@ -110,6 +114,8 @@ header div.row nav ul li a:hover {
 }
 
 .container {
+  animation-name: slideDownFadeIN;
+  animation-duration: 1.5s;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -133,7 +139,8 @@ header div.row nav ul li a:hover {
   color: burlywood;
   color: #383333;
 }
-.container section .container .oneline .descriptions {
+.container section .container .oneline .movie {
+  width: 65%;
   margin: 5px;
 }
 
