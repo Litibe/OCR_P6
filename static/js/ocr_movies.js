@@ -173,12 +173,33 @@ function action_modal_best_movie (url_movie) {
     }
   })
   .then(function(value) {
-    console.log("test")
-    let div_modal_best_movie = document.querySelector("#modal_the_movie .modal-content")
-    let title_best_movie = document.createElement("h2");
-    console.log(title_best_movie);
+    let div_modal_best_movie = document.querySelector("#modal_the_movie .modal-content div");
+    console.log(div_modal_best_movie)
+    let div_modal_left = document.createElement("div");
+    let div_modal_right= document.createElement("div");
+
+    let title_best_movie = document.querySelector("#modal_the_movie .modal-content h2");
     title_best_movie.innerHTML = value.title;
-    div_modal_best_movie.appendChild(title_best_movie);
+    div_modal_best_movie.appendChild(div_modal_left);
+    let actors_movie = ""
+    for (let actor of value.actors) {actors_movie += actor + ", "};
+    let info_left = "<ul><li>Genres : " + value.genres +
+     "</li>" + "<li>Date published : " + value.date_published + "</li>"
+    + "<li>Rated : " + value.rated + "</li>"
+    + "<li>Score Imdb : " + value.imdb + "</li>"
+    + "<li>Directors : " + value.directors + "</li>"
+    + "<li>Actors : " + actors_movie +"</li>"
+    + "<li>Duration : " + value.duration +"</li>"
+    + "<li>Countries : " + value.countries +"</li>"
+    + "<li>Reviews from critics : " + value.reviews_from_critics +"</li>"
+    + "<li>Description : " + value.long_description + "</li>"
+    +"</ul>";
+    div_modal_left.innerHTML = info_left;
+    div_modal_best_movie.appendChild(div_modal_right);
+    img_movie = document.createElement('div');
+    img_movie.innerHTML = "<img src="+value.image_url+"/>";
+    div_modal_right.appendChild(img_movie);
+    
   });
   btn_modal_best_movie.addEventListener('click', function(event) {
     div_main_modal_best_movie.style.display = "block"

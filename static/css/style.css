@@ -46,11 +46,14 @@ h3.title_movie {
 }
 .btn_close {
   float: right;
+  font-size: 20px;
+  cursor: pointer;
 }
 .btn_margin_auto {
   margin: auto;
 }
 .btn_info_movie {
+  cursor: pointer;
   text-align: center;
   width: 60%;
   min-width: 18%;
@@ -174,11 +177,19 @@ header div.row nav ul li a:hover {
   background-color: rgba(0, 0, 0, 0.4);
 }
 .container section .container .modal .modal-content {
-  background-color: #fefefe;
+  background-color: #3a0909;
   margin: 15% auto;
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
+  color: white;
+}
+.container section .container .modal .modal-content .include-modal {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  flex-wrap: wrap;
 }
 .container section .row {
   display: flex;

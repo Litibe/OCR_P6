@@ -13,10 +13,13 @@
     }
     &_close{
         float: right;
+        font-size: 20px;
+        cursor : pointer ;
     }
     &_margin_auto{
         margin: auto;}
     &_info_movie{
+        cursor : pointer ;
         text-align: center;
         width: 60%;
         min-width: 18%;
