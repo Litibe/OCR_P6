@@ -28,7 +28,7 @@ function add_best_movie(url_best_movie) {
   })
 }
 
-function extract_8_best_movies() {
+async function extract_8_best_movies() {
   fetch("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score")
   .then(function(res) {if(res.ok){return res.json()}})
   .then(function(value) {
@@ -82,40 +82,6 @@ function add_best__other_movies(best_movies_url, i) {
   add_movie_into_carroussel(carroussel_best_movies, best_movies_url[i+2])
   add_movie_into_carroussel(carroussel_best_movies, best_movies_url[i+3]) 
 };
-
-function carroussel_7_elements() {
-  extract_7_best_movies()
-  i=0
-  let carroussel_best_movies = document.querySelector("section#best_movies .carroussel");
-
-
-  add_best_movie(best_movies_url, i)
-  let left_carroussel_best_movies = document.querySelector("section#best_movies svg.btn_carroussel_left")
-  left_carroussel_best_movies.addEventListener("click", function(event){
-    i-1
-    remove_movies_into_carroussel(carroussel_best_movies)
-    add_best_movie(best_movies_url, i)
-  } )
-  let right_carroussel_best_movies = document.querySelector("section#best_movies svg.btn_carroussel_right")
-  right_carroussel_best_movies.addEventListener("click", function(event){
-    i+1
-    remove_movies_into_carroussel(carroussel_best_movies)
-    add_best_movie(best_movies_url, i)
-  } )
-};
-//carroussel_7_elements()
-
-extract_8_best_movies()
-let best_movies_url = [monStockage.getItem("1_best_movies"),
-                     monStockage.getItem("2_best_movies"),
-                     monStockage.getItem("3_best_movies"),
-                     monStockage.getItem("4_best_movies"),
-                     monStockage.getItem("5_best_movies"),
-                     monStockage.getItem("6_best_movies"),
-                     monStockage.getItem("7_best_movies"),
-                     monStockage.getItem("8_best_movies")
-                    ]
-
 function search_best_movie_score_vote (best_movies_url) {
   let movies_score = new Map();
   let movies_vote = new Map();
@@ -165,8 +131,44 @@ function search_best_movie_score_vote (best_movies_url) {
   }
   return url_best_movie
 }
-url_best_movie = search_best_movie_score_vote(best_movies_url)
+function carroussel_7_elements() {
+  extract_7_best_movies()
+  i=0
+  let carroussel_best_movies = document.querySelector("section#best_movies .carroussel");
+
+
+  add_best_movie(best_movies_url, i)
+  let left_carroussel_best_movies = document.querySelector("section#best_movies svg.btn_carroussel_left")
+  left_carroussel_best_movies.addEventListener("click", function(event){
+    i-1
+    remove_movies_into_carroussel(carroussel_best_movies)
+    add_best_movie(best_movies_url, i)
+  } )
+  let right_carroussel_best_movies = document.querySelector("section#best_movies svg.btn_carroussel_right")
+  right_carroussel_best_movies.addEventListener("click", function(event){
+    i+1
+    remove_movies_into_carroussel(carroussel_best_movies)
+    add_best_movie(best_movies_url, i)
+  } )
+};
+//carroussel_7_elements()
+async function best_movies () {
+  await extract_8_best_movies()
+  let best_movies_url = [monStockage.getItem("1_best_movies"),
+                     monStockage.getItem("2_best_movies"),
+                     monStockage.getItem("3_best_movies"),
+                     monStockage.getItem("4_best_movies"),
+                     monStockage.getItem("5_best_movies"),
+                     monStockage.getItem("6_best_movies"),
+                     monStockage.getItem("7_best_movies"),
+                     monStockage.getItem("8_best_movies")
+                    ]
+  let url_best_movie = await search_best_movie_score_vote(best_movies_url)
+  return url_best_movie
+}
+let url_best_movie = await best_movies ()
 add_best_movie(url_best_movie)
 best_movies_url.splice(best_movies_url.indexOf(url_best_movie));
 i=0
 add_best__other_movies(best_movies_url, i)
+
