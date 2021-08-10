@@ -153,6 +153,7 @@ header div.row nav ul li a:hover {
 }
 .container section .carroussel {
   width: 90%;
+  word-wrap: break-word;
 }
 .container section .carroussel h3 {
   height: 20px;

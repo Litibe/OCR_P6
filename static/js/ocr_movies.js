@@ -165,8 +165,20 @@ function search_best_movie_score_vote (best_movies_url) {
   }
   return url_best_movie
 }
+function remove_the_best_movie_from_list (url_best_movie) {
+  i=0
+  for (let element of best_movies_url) {
+    if ((element.split("####")[0]) == url_best_movie) {
+      
+      best_movies_url.splice(i, 1)
+    } else {
+      i +=1
+    }
+  }
+}
 url_best_movie = search_best_movie_score_vote(best_movies_url)
+remove_the_best_movie_from_list (url_best_movie)
 add_best_movie(url_best_movie)
-best_movies_url.splice(best_movies_url.indexOf(url_best_movie));
+
 i=0
 add_best__other_movies(best_movies_url, i)
