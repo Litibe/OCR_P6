@@ -1,8 +1,8 @@
 monStockage = sessionStorage;
 
 
-function extract_best_movie() {
-  url_movie = fetch("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score")
+function add_best_movie(url_best_movie) {
+  url_movie = fetch(url_best_movie)
   .then(function(res) {
     if(res.ok){
       return res.json();
@@ -14,29 +14,19 @@ function extract_best_movie() {
     let section_the_movie_div_button_movie = document.querySelector("#the_movie .movie button");
     let section_the_movie_div_note = document.querySelector("#the_movie p.note");
     let section_the_movie_img= document.querySelector("#the_movie div.img_movie p");
-    let url_movie = value.results[0].url;
-    let url_image = value.results[0].image_url;
-    section_the_movie_img.innerHTML = "<img src=" + url_image + " alt="+ String(value.results[0].title) + " title="+String(value.results[0].title) + "/> <br/> "
+    let url_movie = value.url;
+    let url_image = value.image_url;
+    section_the_movie_img.innerHTML = "<img src=" + url_image + " alt="+ String(value.title) + " title="+String(value.title) + "/> <br/> "
     let section_the_movie = document.querySelector("section#the_movie")
-    section_the_movie_div_title.innerHTML = value.results[0].title;
+    section_the_movie_div_title.innerHTML = value.title;
     section_the_movie_div_button_movie.classList.remove("hidden");
     section_the_movie_div_resume.innerHTML = "Résume du film : "
-    section_the_movie_div_note.innerHTML = "Note du film : " + value.results[0].imdb_score
-    extract_movie(url_movie)
+    section_the_movie_div_note.innerHTML = "Note du film : " + value.imdb_score
+    let section_the_movie_div_description_p = document.querySelector("#the_movie p.long_description");
+    section_the_movie_div_description_p.innerHTML = "<p> "+ String(value.long_description) + "</p>";
+   
   })
 }
-function extract_movie (url_movie){
-  fetch(String(url_movie))
-  .then(function(res) {
-    if (res.ok) {
-      return res.json();
-    }
-  })
-  .then(function(value) {
-      let section_the_movie_div_description_p = document.querySelector("#the_movie p.long_description");
-      section_the_movie_div_description_p.innerHTML = "<p> "+ String(value.long_description) + "</p>";
-  })
-}  
 
 function extract_8_best_movies() {
   fetch("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score")
@@ -127,29 +117,56 @@ let best_movies_url = [monStockage.getItem("1_best_movies"),
                     ]
 
 function search_best_movie_score_vote (best_movies_url) {
-  let movies_score = {}
-  let movies_vote = {}
-  movies_score[best_movies_url[0].split("####")[1]] = best_movies_url[0].split("####")[0];
-  movies_vote[best_movies_url[0].split("####")[0]] = best_movies_url[0].split("####")[2];
-  movies_score[best_movies_url[1].split("####")[1]] = best_movies_url[1].split("####")[0];
-  movies_vote[best_movies_url[1].split("####")[0]] = best_movies_url[1].split("####")[2];
-  movies_score[best_movies_url[2].split("####")[1]] = best_movies_url[2].split("####")[0];
-  movies_vote[best_movies_url[2].split("####")[0]] = best_movies_url[2].split("####")[2];
-  movies_score[best_movies_url[3].split("####")[1]] = best_movies_url[3].split("####")[0];
-  movies_vote[best_movies_url[3].split("####")[0]] = best_movies_url[3].split("####")[2];
-  movies_score[best_movies_url[4].split("####")[1]] = best_movies_url[4].split("####")[0];
-  movies_vote[best_movies_url[4].split("####")[0]] = best_movies_url[4].split("####")[2];
-  movies_score[best_movies_url[5].split("####")[1]] = best_movies_url[5].split("####")[0];
-  movies_vote[best_movies_url[5].split("####")[0]] = best_movies_url[5].split("####")[2];
-  movies_score[best_movies_url[6].split("####")[1]] = best_movies_url[6].split("####")[0];
-  movies_vote[best_movies_url[6].split("####")[0]] = best_movies_url[6].split("####")[2];
-  movies_score[best_movies_url[7].split("####")[1]] = best_movies_url[7].split("####")[0];
-  movies_vote[best_movies_url[7].split("####")[0]] = best_movies_url[7].split("####")[2];
-  for (let element in movies_score) {
-    console.log(element)
-  }
+  let movies_score = new Map();
+  let movies_vote = new Map();
+  movies_score.set(best_movies_url[0].split("####")[0], best_movies_url[0].split("####")[1]);
+  movies_vote.set(best_movies_url[0].split("####")[0], best_movies_url[0].split("####")[2]);
+  movies_score.set(best_movies_url[1].split("####")[0], best_movies_url[1].split("####")[1]);
+  movies_vote.set(best_movies_url[1].split("####")[0], best_movies_url[1].split("####")[2]);
+  movies_score.set(best_movies_url[2].split("####")[0], best_movies_url[2].split("####")[1]);
+  movies_vote.set(best_movies_url[2].split("####")[0], best_movies_url[2].split("####")[2]);
+  movies_score.set(best_movies_url[3].split("####")[0], best_movies_url[3].split("####")[1]);
+  movies_vote.set(best_movies_url[3].split("####")[0], best_movies_url[3].split("####")[2]);
+  movies_score.set(best_movies_url[4].split("####")[0], best_movies_url[4].split("####")[1]);
+  movies_vote.set(best_movies_url[4].split("####")[0], best_movies_url[4].split("####")[2]);
+  movies_score.set(best_movies_url[5].split("####")[0], best_movies_url[5].split("####")[1]);
+  movies_vote.set(best_movies_url[5].split("####")[0], best_movies_url[5].split("####")[2]);
+  movies_score.set(best_movies_url[6].split("####")[0], best_movies_url[6].split("####")[1]);
+  movies_vote.set(best_movies_url[6].split("####")[0],best_movies_url[6].split("####")[2]);
+  movies_score.set(best_movies_url[7].split("####")[0],best_movies_url[7].split("####")[1]);
+  movies_vote.set(best_movies_url[7].split("####")[0],best_movies_url[7].split("####")[2]);
     
-  console.log(movies_score)
-  console.log(movies_vote)
+  let liste_score = []
+  for (let [key, value] of movies_score) {
+    liste_score.push(value);
+  }
+  liste_score.sort()
+  let best_score = liste_score[liste_score.length-1]
+  let liste_best_movies = []
+  for (let [key, value] of movies_score) {
+    if (value == best_score) {
+      liste_best_movies.push(key)}
+  }
+  let liste_votes_movies = []
+  for (let movie of liste_best_movies) {
+    for (let [key, value] of movies_vote) {
+      if (movie == key) {
+        liste_votes_movies.push(value)
+      }
+    }
+  }
+  liste_votes_movies.sort()
+  let url_best_movie
+  let best_vote = liste_votes_movies[liste_votes_movies.length-1]
+  for (let [key, value] of movies_vote) {
+    if (value == best_vote) {
+      url_best_movie = key
+    }
+  }
+  return url_best_movie
 }
-search_best_movie_score_vote(best_movies_url)
+url_best_movie = search_best_movie_score_vote(best_movies_url)
+add_best_movie(url_best_movie)
+best_movies_url.splice(best_movies_url.indexOf(url_best_movie));
+i=0
+add_best__other_movies(best_movies_url, i)
