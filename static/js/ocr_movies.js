@@ -2,7 +2,7 @@ monStockage = sessionStorage;
 
 
 function add_best_movie(url_best_movie) {
-  url_movie = fetch(url_best_movie)
+  fetch(url_best_movie)
   .then(function(res) {
     if(res.ok){
       return res.json();
@@ -13,18 +13,15 @@ function add_best_movie(url_best_movie) {
     let section_the_movie_div_resume = document.querySelector("#the_movie .movie h4");
     let section_the_movie_div_button_movie = document.querySelector("#the_movie .movie button");
     let section_the_movie_div_note = document.querySelector("#the_movie p.note");
-    let section_the_movie_img= document.querySelector("#the_movie div.img_movie p");
-    let url_movie = value.url;
+    let section_the_movie_img = document.querySelector("#the_movie div.img_movie p");
     let url_image = value.image_url;
     section_the_movie_img.innerHTML = "<img src=" + url_image + " alt="+ String(value.title) + " title="+String(value.title) + "/> <br/> "
-    let section_the_movie = document.querySelector("section#the_movie")
     section_the_movie_div_title.innerHTML = value.title;
     section_the_movie_div_button_movie.classList.remove("hidden");
     section_the_movie_div_resume.innerHTML = "Résume du film : "
     section_the_movie_div_note.innerHTML = "Note du film : " + value.imdb_score
     let section_the_movie_div_description_p = document.querySelector("#the_movie p.long_description");
-    section_the_movie_div_description_p.innerHTML = "<p> "+ String(value.long_description) + "</p>";
-   
+    section_the_movie_div_description_p.innerHTML = "<p> "+ String(value.long_description) + "</p>"; 
   })
 }
 
@@ -61,7 +58,7 @@ function add_movie_into_carroussel(carroussel, url_movie){
     movie.appendChild(movie_img);
     carroussel.appendChild(movie);
   })
-}  
+};
 
 function remove_movies_into_carroussel(carroussel) {
   let movie1 = document.querySelector("section#best_movies .carroussel div");
@@ -72,7 +69,7 @@ function remove_movies_into_carroussel(carroussel) {
   carroussel.removeChild(movie3)
   let movie4 = document.querySelector("section#best_movies .carroussel div");
   carroussel.removeChild(movie4)
-}
+};
 
 function add_best__other_movies(best_movies_url, i) {
   let carroussel_best_movies = document.querySelector("section#best_movies .carroussel");
@@ -82,39 +79,6 @@ function add_best__other_movies(best_movies_url, i) {
   add_movie_into_carroussel(carroussel_best_movies, best_movies_url[i+2])
   add_movie_into_carroussel(carroussel_best_movies, best_movies_url[i+3]) 
 };
-
-function carroussel_7_elements() {
-  extract_7_best_movies()
-  i=0
-  let carroussel_best_movies = document.querySelector("section#best_movies .carroussel");
-
-
-  add_best_movie(best_movies_url, i)
-  let left_carroussel_best_movies = document.querySelector("section#best_movies svg.btn_carroussel_left")
-  left_carroussel_best_movies.addEventListener("click", function(event){
-    i-1
-    remove_movies_into_carroussel(carroussel_best_movies)
-    add_best_movie(best_movies_url, i)
-  } )
-  let right_carroussel_best_movies = document.querySelector("section#best_movies svg.btn_carroussel_right")
-  right_carroussel_best_movies.addEventListener("click", function(event){
-    i+1
-    remove_movies_into_carroussel(carroussel_best_movies)
-    add_best_movie(best_movies_url, i)
-  } )
-};
-//carroussel_7_elements()
-
-extract_8_best_movies()
-let best_movies_url = [monStockage.getItem("1_best_movies"),
-                     monStockage.getItem("2_best_movies"),
-                     monStockage.getItem("3_best_movies"),
-                     monStockage.getItem("4_best_movies"),
-                     monStockage.getItem("5_best_movies"),
-                     monStockage.getItem("6_best_movies"),
-                     monStockage.getItem("7_best_movies"),
-                     monStockage.getItem("8_best_movies")
-                    ]
 
 function search_best_movie_score_vote (best_movies_url) {
   let movies_score = new Map();
@@ -164,7 +128,7 @@ function search_best_movie_score_vote (best_movies_url) {
     }
   }
   return url_best_movie
-}
+};
 function remove_the_best_movie_from_list (url_best_movie) {
   i=0
   for (let element of best_movies_url) {
@@ -175,10 +139,75 @@ function remove_the_best_movie_from_list (url_best_movie) {
       i +=1
     }
   }
-}
-url_best_movie = search_best_movie_score_vote(best_movies_url)
-remove_the_best_movie_from_list (url_best_movie)
-add_best_movie(url_best_movie)
+};
+function carroussel_7_elements() {
+  extract_7_best_movies()
+  i=0
+  let carroussel_best_movies = document.querySelector("section#best_movies .carroussel");
 
-i=0
-add_best__other_movies(best_movies_url, i)
+
+  add_best_movie(best_movies_url, i)
+  let left_carroussel_best_movies = document.querySelector("section#best_movies svg.btn_carroussel_left")
+  left_carroussel_best_movies.addEventListener("click", function(event){
+    i-1
+    remove_movies_into_carroussel(carroussel_best_movies)
+    add_best_movie(best_movies_url, i)
+  } )
+  let right_carroussel_best_movies = document.querySelector("section#best_movies svg.btn_carroussel_right")
+  right_carroussel_best_movies.addEventListener("click", function(event){
+    i+1
+    remove_movies_into_carroussel(carroussel_best_movies)
+    add_best_movie(best_movies_url, i)
+  } )
+};
+
+function action_modal_best_movie (url_movie) {
+  let div_main_modal_best_movie = document.getElementById("modal_the_movie")
+  let btn_modal_best_movie = document.querySelector("#the_movie .movie button");
+  let btn_close_modal_best_movie = document.querySelector("#the_movie .btn_close")
+
+  fetch(url_movie)
+  .then(function(res) {
+    if(res.ok){
+      return res.json();
+    }
+  })
+  .then(function(value) {
+    console.log("test")
+    let div_modal_best_movie = document.querySelector("#modal_the_movie .modal-content")
+    let title_best_movie = document.createElement("h2");
+    console.log(title_best_movie);
+    title_best_movie.innerHTML = value.title;
+    div_modal_best_movie.appendChild(title);
+  });
+  btn_modal_best_movie.addEventListener('click', function(event) {
+    div_main_modal_best_movie.style.display = "block"
+  });
+  btn_close_modal_best_movie.addEventListener('click', function(event) {
+    div_main_modal_best_movie.style.display = "none"
+  });
+  // When the user clicks anywhere outside of the modal, close it
+  window.addEventListener('click', function(event) {
+    if (event.target == div_main_modal_best_movie) {
+      div_main_modal_best_movie.style.display = "none";}
+  });
+
+};
+//carroussel_7_elements()
+
+extract_8_best_movies()
+let best_movies_url = [monStockage.getItem("1_best_movies"),
+                     monStockage.getItem("2_best_movies"),
+                     monStockage.getItem("3_best_movies"),
+                     monStockage.getItem("4_best_movies"),
+                     monStockage.getItem("5_best_movies"),
+                     monStockage.getItem("6_best_movies"),
+                     monStockage.getItem("7_best_movies"),
+                     monStockage.getItem("8_best_movies")
+                    ];
+url_best_movie = search_best_movie_score_vote(best_movies_url);
+remove_the_best_movie_from_list (url_best_movie);
+add_best_movie(url_best_movie);
+i=0;
+add_best__other_movies(best_movies_url, i);
+action_modal_best_movie(url_best_movie);
