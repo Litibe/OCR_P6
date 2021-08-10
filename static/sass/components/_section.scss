@@ -7,7 +7,7 @@
     word-wrap: break-word ;
     width: 90%;
     margin:auto ;
-    margin-top: 0%;
+    margin-top: 4%;
     section{
         width: 100%;
         background-color: rgba(245, 226, 199, 0.938);
@@ -44,20 +44,31 @@
                 }
             }
         }
-        .carroussel{
-            @include flexrow_space_around;
-            text-align: center;
-            width: 90%;
-            word-wrap: break-word ;
-            & h3 {
-                height: 20px;
-                text-align: center;
-                word-wrap: break-word ;
+        .row{
+            @include flexrow_space_between;
+            .btn_carroussel{
+                width: 5%;
             }
-            & img{
-                width: auto;
-            }
+           .carroussel{
+                @include flexrow_space_around;
+                width: 90%;
+                & div {
+                    padding: 5px;
+                    & h3 {
+                        height: 15%;
+                        word-wrap: break-word ;
+                        margin-bottom: -15px;
+                        text-align: center;
+                    }
+                    & img{
+                        width: auto;
+                        display: block;
+                        text-align: center;
+                    }
+                }
+            } 
         }
+        
     }
 }
 

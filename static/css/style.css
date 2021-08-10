@@ -16,6 +16,7 @@ h1 {
   text-align: center;
   text-shadow: 2px 2px 12px black;
   margin-top: 8%;
+  font-size: x-large;
 }
 
 h2, h3 {
@@ -138,7 +139,7 @@ header div.row nav ul li a:hover {
   word-wrap: break-word;
   width: 90%;
   margin: auto;
-  margin-top: 0%;
+  margin-top: 4%;
 }
 .container section {
   width: 100%;
@@ -179,23 +180,36 @@ header div.row nav ul li a:hover {
   border: 1px solid #888;
   width: 80%;
 }
-.container section .carroussel {
+.container section .row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-content: center;
+}
+.container section .row .btn_carroussel {
+  width: 5%;
+}
+.container section .row .carroussel {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-content: center;
   flex-wrap: wrap;
-  text-align: center;
   width: 90%;
-  word-wrap: break-word;
 }
-.container section .carroussel h3 {
-  height: 20px;
+.container section .row .carroussel div {
+  padding: 5px;
+}
+.container section .row .carroussel div h3 {
+  height: 15%;
+  word-wrap: break-word;
+  margin-bottom: -15px;
   text-align: center;
-  word-wrap: break-word;
 }
-.container section .carroussel img {
+.container section .row .carroussel div img {
   width: auto;
+  display: block;
+  text-align: center;
 }
 
 .row {

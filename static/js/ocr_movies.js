@@ -25,7 +25,7 @@ function add_best_movie(url_best_movie) {
   })
 }
 
-async function extract_8_best_movies() {
+function extract_8_best_movies() {
   fetch("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score")
   .then(function(res) {if(res.ok){return res.json()}})
   .then(function(value) {
@@ -52,9 +52,9 @@ function add_movie_into_carroussel(carroussel, url_movie){
     let movie = document.createElement("div");
     let movie_img = document.createElement("div");
     movie_img.innerHTML = "<img src="+value.image_url+"/>";
-    let movie_title = document.createElement("h3");
-    movie_title.innerHTML = value.title;
-    movie.appendChild(movie_title);
+    //let movie_title = document.createElement("h3");
+    //movie_title.innerHTML = value.title;
+    //movie.appendChild(movie_title);
     movie.appendChild(movie_img);
     carroussel.appendChild(movie);
   })
@@ -79,10 +79,7 @@ function add_best__other_movies(best_movies_url, i) {
   add_movie_into_carroussel(carroussel_best_movies, best_movies_url[i+2])
   add_movie_into_carroussel(carroussel_best_movies, best_movies_url[i+3]) 
 };
-<<<<<<< HEAD
-=======
 
->>>>>>> 2738ad4859cca2a022cf1f198c261fc21e969473
 function search_best_movie_score_vote (best_movies_url) {
   let movies_score = new Map();
   let movies_vote = new Map();
@@ -131,9 +128,6 @@ function search_best_movie_score_vote (best_movies_url) {
     }
   }
   return url_best_movie
-<<<<<<< HEAD
-}
-=======
 };
 function remove_the_best_movie_from_list (url_best_movie) {
   i=0
@@ -146,7 +140,6 @@ function remove_the_best_movie_from_list (url_best_movie) {
     }
   }
 };
->>>>>>> 2738ad4859cca2a022cf1f198c261fc21e969473
 function carroussel_7_elements() {
   extract_7_best_movies()
   i=0
@@ -167,12 +160,6 @@ function carroussel_7_elements() {
     add_best_movie(best_movies_url, i)
   } )
 };
-<<<<<<< HEAD
-//carroussel_7_elements()
-async function best_movies () {
-  await extract_8_best_movies()
-  let best_movies_url = [monStockage.getItem("1_best_movies"),
-=======
 
 function action_modal_best_movie (url_movie) {
   let div_main_modal_best_movie = document.getElementById("modal_the_movie")
@@ -191,7 +178,7 @@ function action_modal_best_movie (url_movie) {
     let title_best_movie = document.createElement("h2");
     console.log(title_best_movie);
     title_best_movie.innerHTML = value.title;
-    div_modal_best_movie.appendChild(title);
+    div_modal_best_movie.appendChild(title_best_movie);
   });
   btn_modal_best_movie.addEventListener('click', function(event) {
     div_main_modal_best_movie.style.display = "block"
@@ -210,7 +197,6 @@ function action_modal_best_movie (url_movie) {
 
 extract_8_best_movies()
 let best_movies_url = [monStockage.getItem("1_best_movies"),
->>>>>>> 2738ad4859cca2a022cf1f198c261fc21e969473
                      monStockage.getItem("2_best_movies"),
                      monStockage.getItem("3_best_movies"),
                      monStockage.getItem("4_best_movies"),
@@ -218,18 +204,6 @@ let best_movies_url = [monStockage.getItem("1_best_movies"),
                      monStockage.getItem("6_best_movies"),
                      monStockage.getItem("7_best_movies"),
                      monStockage.getItem("8_best_movies")
-<<<<<<< HEAD
-                    ]
-  let url_best_movie = await search_best_movie_score_vote(best_movies_url)
-  return url_best_movie
-}
-let url_best_movie = await best_movies ()
-add_best_movie(url_best_movie)
-best_movies_url.splice(best_movies_url.indexOf(url_best_movie));
-i=0
-add_best__other_movies(best_movies_url, i)
-
-=======
                     ];
 url_best_movie = search_best_movie_score_vote(best_movies_url);
 remove_the_best_movie_from_list (url_best_movie);
@@ -237,4 +211,3 @@ add_best_movie(url_best_movie);
 i=0;
 add_best__other_movies(best_movies_url, i);
 action_modal_best_movie(url_best_movie);
->>>>>>> 2738ad4859cca2a022cf1f198c261fc21e969473
