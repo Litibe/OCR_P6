@@ -1,7 +1,7 @@
 monStockage = sessionStorage;
 
 
-function add_best_movie(url_best_movie) {
+async function add_best_movie(url_best_movie) {
   fetch(url_best_movie)
   .then(function(res) {
     if(res.ok){
@@ -25,7 +25,7 @@ function add_best_movie(url_best_movie) {
   })
 }
 
-function extract_8_best_movies() {
+async function extract_8_best_movies() {
   fetch("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score")
   .then(function(res) {if(res.ok){return res.json()}})
   .then(function(value) {
@@ -44,7 +44,7 @@ function extract_8_best_movies() {
   });
 };
 
-function add_movie_into_carroussel(carroussel, url_movie){
+async function add_movie_into_carroussel(carroussel, url_movie){
   fetch(String(url_movie))
   .then(function(res) {
     if (res.ok) {return res.json();}})
@@ -60,7 +60,7 @@ function add_movie_into_carroussel(carroussel, url_movie){
   })
 };
 
-function remove_movies_into_carroussel(carroussel) {
+async function remove_movies_into_carroussel(carroussel) {
   let movie1 = document.querySelector("section#best_movies .carroussel div");
   carroussel.removeChild(movie1)
   let movie2 = document.querySelector("section#best_movies .carroussel div");
@@ -71,7 +71,7 @@ function remove_movies_into_carroussel(carroussel) {
   carroussel.removeChild(movie4)
 };
 
-function add_best__other_movies(best_movies_url, i) {
+async function add_best__other_movies(best_movies_url, i) {
   let carroussel_best_movies = document.querySelector("section#best_movies .carroussel");
   carroussel_best_movies.classList.add("row");
   add_movie_into_carroussel(carroussel_best_movies, best_movies_url[i])
@@ -80,7 +80,7 @@ function add_best__other_movies(best_movies_url, i) {
   add_movie_into_carroussel(carroussel_best_movies, best_movies_url[i+3]) 
 };
 
-function search_best_movie_score_vote (best_movies_url) {
+async function search_best_movie_score_vote (best_movies_url) {
   let movies_score = new Map();
   let movies_vote = new Map();
   movies_score.set(best_movies_url[0].split("####")[0], best_movies_url[0].split("####")[1]);
@@ -129,7 +129,7 @@ function search_best_movie_score_vote (best_movies_url) {
   }
   return url_best_movie
 };
-function remove_the_best_movie_from_list (url_best_movie) {
+async function remove_the_best_movie_from_list (best_movies_url, url_best_movie) {
   i=0
   for (let element of best_movies_url) {
     if ((element.split("####")[0]) == url_best_movie) {
@@ -139,8 +139,9 @@ function remove_the_best_movie_from_list (url_best_movie) {
       i +=1
     }
   }
+  return best_movies_url
 };
-function carroussel_7_elements() {
+async function carroussel_7_elements() {
   extract_7_best_movies()
   i=0
   let carroussel_best_movies = document.querySelector("section#best_movies .carroussel");
@@ -161,11 +162,7 @@ function carroussel_7_elements() {
   } )
 };
 
-function action_modal_best_movie (url_movie) {
-  let div_main_modal_best_movie = document.getElementById("modal_the_movie")
-  let btn_modal_best_movie = document.querySelector("#the_movie .movie button");
-  let btn_close_modal_best_movie = document.querySelector("#the_movie .btn_close")
-
+function addActionModalMovie (divMainModal, divModal, btnModal, btnExit, url_movie) {
   fetch(url_movie)
   .then(function(res) {
     if(res.ok){
@@ -173,14 +170,11 @@ function action_modal_best_movie (url_movie) {
     }
   })
   .then(function(value) {
-    let div_modal_best_movie = document.querySelector("#modal_the_movie .modal-content div");
-    console.log(div_modal_best_movie)
     let div_modal_left = document.createElement("div");
     let div_modal_right= document.createElement("div");
-
     let title_best_movie = document.querySelector("#modal_the_movie .modal-content h2");
     title_best_movie.innerHTML = value.title;
-    div_modal_best_movie.appendChild(div_modal_left);
+    divModal.appendChild(div_modal_left);
     let actors_movie = ""
     for (let actor of value.actors) {actors_movie += actor + ", "};
     let info_left = "<ul><li>Genres : " + value.genres +
@@ -195,40 +189,53 @@ function action_modal_best_movie (url_movie) {
     + "<li>Description : " + value.long_description + "</li>"
     +"</ul>";
     div_modal_left.innerHTML = info_left;
-    div_modal_best_movie.appendChild(div_modal_right);
+    divModal.appendChild(div_modal_right);
     img_movie = document.createElement('div');
     img_movie.innerHTML = "<img src="+value.image_url+"/>";
     div_modal_right.appendChild(img_movie);
     
   });
-  btn_modal_best_movie.addEventListener('click', function(event) {
-    div_main_modal_best_movie.style.display = "block"
+  btnModal.addEventListener('click', function(event) {
+    divModal.style.display = "block"
   });
-  btn_close_modal_best_movie.addEventListener('click', function(event) {
-    div_main_modal_best_movie.style.display = "none"
+  btnExit.addEventListener('click', function(event) {
+    divModal.style.display = "none"
   });
   // When the user clicks anywhere outside of the modal, close it
   window.addEventListener('click', function(event) {
-    if (event.target == div_main_modal_best_movie) {
-      div_main_modal_best_movie.style.display = "none";}
+    if (event.target == divMainModal) {
+      divModal.style.display = "none";}
   });
 
 };
 //carroussel_7_elements()
 
-extract_8_best_movies()
-let best_movies_url = [monStockage.getItem("1_best_movies"),
-                     monStockage.getItem("2_best_movies"),
-                     monStockage.getItem("3_best_movies"),
-                     monStockage.getItem("4_best_movies"),
-                     monStockage.getItem("5_best_movies"),
-                     monStockage.getItem("6_best_movies"),
-                     monStockage.getItem("7_best_movies"),
-                     monStockage.getItem("8_best_movies")
-                    ];
-url_best_movie = search_best_movie_score_vote(best_movies_url);
-remove_the_best_movie_from_list (url_best_movie);
-add_best_movie(url_best_movie);
-i=0;
-add_best__other_movies(best_movies_url, i);
-action_modal_best_movie(url_best_movie);
+async function manageBestMovie () {
+  await extract_8_best_movies()
+  let best_movies_url = [monStockage.getItem("1_best_movies"),
+  monStockage.getItem("2_best_movies"),
+  monStockage.getItem("3_best_movies"),
+  monStockage.getItem("4_best_movies"),
+  monStockage.getItem("5_best_movies"),
+  monStockage.getItem("6_best_movies"),
+  monStockage.getItem("7_best_movies"),
+  monStockage.getItem("8_best_movies")];
+  let url_best_movie = await search_best_movie_score_vote(best_movies_url);
+  add_best_movie(url_best_movie);
+  best_movies_url = await remove_the_best_movie_from_list(best_movies_url, url_best_movie);
+  let divMainModalBestMovie = document.querySelector("#modal_the_movie .modal-content");
+  console.log(divMainModalBestMovie)
+  let div_modal_best_movie = document.querySelector("#modal_the_movie .include-modal");
+  let btn_modal_best_movie = document.querySelector("#the_movie .movie button");
+  let btn_close_modal_best_movie = document.querySelector("#the_movie .btn_close")
+  addActionModalMovie(divMainModalBestMovie, div_modal_best_movie,btn_modal_best_movie,btn_close_modal_best_movie, url_best_movie);
+  return url_best_movie,best_movies_url
+}
+
+async function main () {
+  best_movies_url = await manageBestMovie();
+  i=0
+  add_best__other_movies(best_movies_url, i);
+}
+
+main()
