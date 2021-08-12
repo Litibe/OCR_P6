@@ -5,7 +5,7 @@ async function add_best_movie(url_best_movie) {
   fetch(url_best_movie)
   .then(function(res) {
     if(res.ok){
-      return res.json();
+      return res.json()
     }
   })
   .then(function(value) {
@@ -44,17 +44,18 @@ async function extract_8_best_movies() {
   });
 };
 
-async function add_movie_into_carroussel(carroussel, url_movie, i){
+async function add_movie_into_carroussel(idDivCarousel, url_movie){
   fetch(String(url_movie))
   .then(function(res) {
     if (res.ok) {return res.json();}})
   .then(function(value) {
+    let divCarousel = document.querySelector("section"+ idDivCarousel+" .carroussel")
     let movie = document.createElement("div");
     let movie_img = document.createElement("div");
     movie_img.innerHTML = "<img src="+value.image_url+"/>";
     movie.appendChild(movie_img);
-    movie.classList.add("divmovie"+String(i));
-    carroussel.appendChild(movie);
+    movie.classList.add(idDivCarousel.replace("#","")+"divmovie");
+    divCarousel.appendChild(movie);
   })
 };
 
@@ -119,14 +120,12 @@ async function remove_the_best_movie_from_list (best_movies_url, url_best_movie)
   }
   return best_movies_url
 };
-async function moviesIntoCarousel(idDivCaroussel, MoviesList) {
-  let divCarousel = document.querySelector("section"+ idDivCaroussel+" .carroussel")
-  i=1
+async function moviesIntoCarousel(idDivCarousel, MoviesList) {
+  i=0
   for (movieUrl of MoviesList ) {
-    
-    add_movie_into_carroussel(divCarousel, movieUrl, i)
-    let divMovie = document.querySelector("section"+idDivCaroussel+" .carroussel .divmovie"+String(i));
-    console.log(divMovie);
+    add_movie_into_carroussel(idDivCarousel, movieUrl)
+    let divMovie = document.getElementsByClassName((idDivCarousel.replace("#",""))+"divmovie");
+    console.log(divMovie[0]);
     let newDivMovieMainModal = document.createElement("div");
     let newDivMovieMainModalContent = document.createElement("div");
     newDivMovieMainModal.classList.add("modal");
