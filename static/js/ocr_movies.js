@@ -44,19 +44,59 @@ async function extract_8_best_movies() {
   });
 };
 
-async function add_movie_into_carroussel(idDivCarousel, url_movie){
+async function add_movie_into_idDiv(idDivCarousel, url_movie, i){
   fetch(String(url_movie))
   .then(function(res) {
     if (res.ok) {return res.json();}})
   .then(function(value) {
-    let divCarousel = document.querySelector("section"+ idDivCarousel+" .carroussel")
-    let movie = document.createElement("div");
-    let movie_img = document.createElement("div");
-    movie_img.innerHTML = "<img src="+value.image_url+"/>";
-    movie.appendChild(movie_img);
-    movie.classList.add(idDivCarousel.replace("#","")+"divmovie");
-    divCarousel.appendChild(movie);
-  })
+    let divMovie = document.querySelector(idDivCarousel+String(i))
+    let movie_img = document.querySelector(idDivCarousel+String(i)+" div");
+    movie_img.innerHTML = "<button><img src="+value.image_url+"/></button>";
+    movie_img.setAttribute("id", idDivCarousel.replace("#","")+"img_movie"+String(i))
+    divMovie.appendChild(movie_img);
+    let newDivMovieMainModal = document.querySelector(idDivCarousel+String(i)+" .modal");
+    let newDivMovieMainModalContent = document.querySelector(idDivCarousel+String(i)+" .modal-content");
+    let newDivMovieMainModalContentH2 = document.querySelector(idDivCarousel+String(i)+" .modal-content h2");
+    let newDivMovieMainModalContentInclude = document.querySelector(idDivCarousel+String(i)+" .modal-content .include-modal");
+    let btnExit = document.querySelector(idDivCarousel+String(i)+" .modal-content .btn_close")
+    
+    let div_modal_left = document.createElement("div");
+    div_modal_left.classList.add(idDivCarousel+"modalLeftMovie"+String(i))
+    let div_modal_right= document.createElement("div");
+    div_modal_right.classList.add(idDivCarousel+"modalRightMovie"+String(i))
+    newDivMovieMainModalContentH2.innerHTML = value.title;
+    newDivMovieMainModalContentInclude.appendChild(div_modal_left);
+    let actors_movie = "";
+    for (let actor of value.actors) {actors_movie += actor + ", "};
+    let info_left = "<ul><li>Genres : " + value.genres +
+                  "</li>" + "<li>Date published : " + value.date_published + "</li>"
+                  + "<li>Rated : " + value.rated + "</li>"
+                  + "<li>Score Imdb : " + value.imdb + "</li>"
+                  + "<li>Directors : " + value.directors + "</li>"
+                  + "<li>Actors : " + actors_movie +"</li>"
+                  + "<li>Duration : " + value.duration +"</li>"
+                  + "<li>Countries : " + value.countries +"</li>"
+                  + "<li>Reviews from critics : " + value.reviews_from_critics +"</li>"
+                  + "<li>Description : " + value.long_description + "</li>"
+                  +"</ul>";
+    div_modal_left.innerHTML = info_left;
+    newDivMovieMainModalContentInclude.appendChild(div_modal_right);
+    img_movie = document.createElement('div');
+    img_movie.innerHTML = "<img src="+value.image_url+"/>";
+    div_modal_right.appendChild(img_movie);
+    let btnModal = document.querySelector(idDivCarousel+"img_movie"+String(i))
+    btnModal.addEventListener('click', function() {
+      newDivMovieMainModal.style.display = "block"
+      });
+    btnExit.addEventListener('click', function() {
+      newDivMovieMainModal.style.display = "none"
+    });
+  // When the user clicks anywhere outside of the modal, close it
+    window.addEventListener('click', function(event) {
+      if (event.target == newDivMovieMainModal) {
+        newDivMovieMainModal.style.display = "none";}
+    });
+  });  
 };
 
 async function search_best_movie_score_vote (best_movies_url) {
@@ -121,33 +161,9 @@ async function remove_the_best_movie_from_list (best_movies_url, url_best_movie)
   return best_movies_url
 };
 async function moviesIntoCarousel(idDivCarousel, MoviesList) {
-  i=0
+  i=1
   for (movieUrl of MoviesList ) {
-    add_movie_into_carroussel(idDivCarousel, movieUrl)
-    let divMovie = document.getElementsByClassName((idDivCarousel.replace("#",""))+"divmovie");
-    console.log(divMovie[0]);
-    let newDivMovieMainModal = document.createElement("div");
-    let newDivMovieMainModalContent = document.createElement("div");
-    newDivMovieMainModal.classList.add("modal");
-    newDivMovieMainModalContent.classList.add("modal-content");
-    divMovie.appendChild(newDivMovieMainModal);
-    newDivMovieMainModal.appendChild(newDivMovieMainModalContent);
-    newDivMovieMainModalContentSpam = document.createElement("span");
-    newDivMovieMainModalContentSpam.classList.add("btn_close");
-    newDivMovieMainModalContentSpam.innerHTML = "&times;";
-    newDivMovieMainModalContent.appendChild(newDivMovieMainModalContentSpam);
-    newDivMovieMainModalContentH2 = document.createElement("h2");
-    newDivMovieMainModalContent.appendChild(newDivMovieMainModalContentH2);
-    newDivMovieMainModalContentInclude = document.createElement("div");
-    newDivMovieMainModalContentInclude.classList.add("include-modal");
-    newDivMovieMainModalContent.appendChild(newDivMovieMainModalContentInclude);
-    
-    addActionModalMovie (
-      divCarousel.querySelector("divmovie"+String(i) +" .modal"),
-      divCarousel.querySelector("divmovie"+String(i) +" .modal .modal-content"),
-      divCarousel.querySelector("divmovie"+String(i) +" div img"),
-      divCarousel.querySelector("divmovie"+String(i) +" .modal .modal-content .btn-close"),
-      url_movie)
+    add_movie_into_idDiv(idDivCarousel, movieUrl, i)
     i++
   }
 };
@@ -161,11 +177,10 @@ function addActionModalMovie (divMainModal, divModal, btnModal, btnExit, url_mov
     }
   })
   .then(function(value) {
-    let myDivModal = monStockage.getItem("myDivModal");
-    myDivModal = document.querySelector(myDivModal);
+    let myDivModal = document.querySelector(monStockage.getItem("myDivModal"));
     let div_modal_left = document.createElement("div");
     let div_modal_right= document.createElement("div");
-    let title_best_movie = document.querySelector("#modal_the_movie .modal-content h2");
+    let title_best_movie = document.querySelector("#the_movie .container .modal .modal-content h2");
     title_best_movie.innerHTML = value.title;
     myDivModal.appendChild(div_modal_left);
     let actors_movie = "";
@@ -187,18 +202,17 @@ function addActionModalMovie (divMainModal, divModal, btnModal, btnExit, url_mov
     img_movie.innerHTML = "<img src="+value.image_url+"/>";
     div_modal_right.appendChild(img_movie);
     });
-  let imgBtn = document.querySelector
-
+  let myDivMain = document.querySelector((monStockage.getItem("myDivModal")).replace(".modal-content .include-modal",".modal"))
   btnModal.addEventListener('click', function() {
-    divMainModal.style.display = "block"
+    myDivMain.style.display = "block"
   });
   btnExit.addEventListener('click', function() {
-    divMainModal.style.display = "none"
+    myDivMain.style.display = "none"
   });
   // When the user clicks anywhere outside of the modal, close it
   window.addEventListener('click', function(event) {
-    if (event.target == divMainModal) {
-      divMainModal.style.display = "none";}
+    if (event.target == myDivMain) {
+      myDivMain.style.display = "none";}
   });
 
 };
@@ -220,7 +234,7 @@ async function manageBestMovie () {
   //let div_modal_best_movie = document.querySelector("#modal_the_movie .modal-content .include-modal");
   let btn_modal_best_movie = document.querySelector("#the_movie .movie button");
   let btn_close_modal_best_movie = document.querySelector("#the_movie .btn_close")
-  addActionModalMovie(divMainModalBestMovie, "#modal_the_movie .modal-content .include-modal",btn_modal_best_movie,btn_close_modal_best_movie, url_best_movie);
+  addActionModalMovie(divMainModalBestMovie, "#the_movie .modal-content .include-modal",btn_modal_best_movie,btn_close_modal_best_movie, url_best_movie);
   return best_movies_url
 }
 
@@ -228,7 +242,8 @@ async function main () {
   best_movies_url = await manageBestMovie();
   i=0
   //add_best__other_movies(best_movies_url, i);
-  moviesIntoCarousel("#best_movies", best_movies_url)
+  
+  moviesIntoCarousel("#best_movies", best_movies_url);
 }
 
 main()

@@ -24,29 +24,7 @@
                     margin: 5px;
                 }
             }
-            .modal{
-                display: none; 
-                position: fixed; 
-                z-index: 1; 
-                left: 0;
-                top: 0;
-                width: 100%; 
-                height: 100%; 
-                overflow: auto; 
-                background-color: rgb(0,0,0); 
-                background-color: rgba(0,0,0,0.4); 
-                .modal-content {
-                    background-color: $background_color_footer;
-                    margin: 15% auto; 
-                    padding: 20px;
-                    border: 1px solid #888;
-                    width: 80%;
-                    color: $color_text_modal;
-                    .include-modal {
-                        @include flexrow_space_around;
-                    }
-                }
-            }
+           
         }
         .row{
             @include flexrow_space_between;
@@ -74,14 +52,38 @@
         }
         
     }
-}
-
+};
 
 .row{
     @include flexrow_space_around;
-}
+};
 
 
 .color{
     background-color: aquamarine;
-}
+};
+
+.modal{
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%; 
+    height: 100%; 
+    overflow: auto; 
+    background-color: rgb(0,0,0); 
+    background-color: rgba(0,0,0,0.4); 
+    .modal-content {
+        background-color: $background_color_footer;
+        margin: 15% auto; 
+        padding: 20px;
+        border: 1px solid #888;
+        width: 80%;
+        color: $color_text_modal;
+        .include-modal {
+            @include flexrow_space_around;
+        }
+    
+    }
+};
