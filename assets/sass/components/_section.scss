@@ -24,12 +24,22 @@
                     margin: 5px;
                 }
             }
+            .img_movie{
+                img {
+                box-shadow: 10px 10px 5px $color_box_shadow_img;
+                }
+            }
            
         }
         .row{
+
             @include flexrow_space_between;
-            .btn_carroussel{
+            .btn_carrousel{   
+                margin: auto;
                 width: 5%;
+                svg:hover {
+                   cursor: pointer;
+                }
             }
            .carrousel{
                 @include flexrow_space_around;
@@ -47,6 +57,7 @@
                         display: block;
                         text-align: center;
                         cursor: help;
+                        box-shadow: 10px 10px 5px $color_box_shadow_img;
                     }
                 }
                 .modal-content {
@@ -97,3 +108,7 @@
     
     }
 };
+
+.best_movies__carrouselItem{
+    display: flex;
+}
