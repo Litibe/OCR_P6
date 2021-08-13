@@ -1,8 +1,8 @@
 monStockage = sessionStorage;
 
 
-async function add_best_movie(url_best_movie) {
-  fetch(url_best_movie)
+async function addBestMovie(urlBestMovie) {
+  fetch(urlBestMovie)
   .then(function(res) {
     if(res.ok){
       return res.json()
@@ -44,26 +44,26 @@ async function extract_8_best_movies() {
   });
 };
 
-async function add_movie_into_idDiv(idDivCarousel, url_movie, i){
-  fetch(String(url_movie))
+async function addMovieIntoIdDiv(idDivCarrousel, urlMovie, indexMovie){
+  fetch(String(urlMovie))
   .then(function(res) {
     if (res.ok) {return res.json();}})
   .then(function(value) {
-    let divMovie = document.querySelector(idDivCarousel+String(i))
-    let movie_img = document.querySelector(idDivCarousel+String(i)+" div");
-    movie_img.innerHTML = "<button><img src="+value.image_url+"/></button>";
-    movie_img.setAttribute("id", idDivCarousel.replace("#","")+"img_movie"+String(i))
-    divMovie.appendChild(movie_img);
-    let newDivMovieMainModal = document.querySelector(idDivCarousel+String(i)+" .modal");
-    let newDivMovieMainModalContent = document.querySelector(idDivCarousel+String(i)+" .modal-content");
-    let newDivMovieMainModalContentH2 = document.querySelector(idDivCarousel+String(i)+" .modal-content h2");
-    let newDivMovieMainModalContentInclude = document.querySelector(idDivCarousel+String(i)+" .modal-content .include-modal");
-    let btnExit = document.querySelector(idDivCarousel+String(i)+" .modal-content .btn_close")
+    let divMovie = document.querySelector(idDivCarrousel+String(indexMovie))
+    let movieiImg = document.querySelector(idDivCarrousel+String(indexMovie)+" div");
+    movieiImg.innerHTML = "<img src="+value.image_url+"/>";
+    movieiImg.setAttribute("id", idDivCarrousel.replace("#","")+"img_movie"+String(indexMovie))
+    divMovie.appendChild(movieiImg);
+    let newDivMovieMainModal = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal");
+    let newDivMovieMainModalContent = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal-content");
+    let newDivMovieMainModalContentH2 = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal-content h2");
+    let newDivMovieMainModalContentInclude = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal-content .include-modal");
+    let btnExit = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal-content .btn_close")
     
     let div_modal_left = document.createElement("div");
-    div_modal_left.classList.add(idDivCarousel+"modalLeftMovie"+String(i))
+    div_modal_left.classList.add(idDivCarrousel+"modalLeftMovie"+String(indexMovie))
     let div_modal_right= document.createElement("div");
-    div_modal_right.classList.add(idDivCarousel+"modalRightMovie"+String(i))
+    div_modal_right.classList.add(idDivCarrousel+"modalRightMovie"+String(indexMovie))
     newDivMovieMainModalContentH2.innerHTML = value.title;
     newDivMovieMainModalContentInclude.appendChild(div_modal_left);
     let actors_movie = "";
@@ -84,14 +84,13 @@ async function add_movie_into_idDiv(idDivCarousel, url_movie, i){
     img_movie = document.createElement('div');
     img_movie.innerHTML = "<img src="+value.image_url+"/>";
     div_modal_right.appendChild(img_movie);
-    let btnModal = document.querySelector(idDivCarousel+"img_movie"+String(i))
+    let btnModal = document.querySelector(idDivCarrousel+"img_movie"+String(indexMovie))
     btnModal.addEventListener('click', function() {
       newDivMovieMainModal.style.display = "block"
       });
     btnExit.addEventListener('click', function() {
       newDivMovieMainModal.style.display = "none"
     });
-  // When the user clicks anywhere outside of the modal, close it
     window.addEventListener('click', function(event) {
       if (event.target == newDivMovieMainModal) {
         newDivMovieMainModal.style.display = "none";}
@@ -160,15 +159,15 @@ async function remove_the_best_movie_from_list (best_movies_url, url_best_movie)
   }
   return best_movies_url
 };
-async function moviesIntoCarousel(idDivCarousel, MoviesList) {
+async function moviesIntoCarrousel(idDivCarrousel, MoviesList) {
   i=1
   for (movieUrl of MoviesList ) {
-    add_movie_into_idDiv(idDivCarousel, movieUrl, i)
+    addMovieIntoIdDiv(idDivCarrousel, movieUrl, i)
     i++
   }
 };
 
-function addActionModalMovie (divMainModal, divModal, btnModal, btnExit, url_movie) {
+function addActionModalMovie (divModal, btnModal, btnExit, url_movie) {
   monStockage.setItem("myDivModal", divModal);
   fetch(url_movie)
   .then(function(res) {
@@ -228,22 +227,17 @@ async function manageBestMovie () {
   monStockage.getItem("7_best_movies"),
   monStockage.getItem("8_best_movies")];
   let url_best_movie = await search_best_movie_score_vote(best_movies_url);
-  add_best_movie(url_best_movie);
+  addBestMovie(url_best_movie);
   best_movies_url = await remove_the_best_movie_from_list(best_movies_url, url_best_movie);
-  let divMainModalBestMovie = document.querySelector("#modal_the_movie");
-  //let div_modal_best_movie = document.querySelector("#modal_the_movie .modal-content .include-modal");
   let btn_modal_best_movie = document.querySelector("#the_movie .movie button");
   let btn_close_modal_best_movie = document.querySelector("#the_movie .btn_close")
-  addActionModalMovie(divMainModalBestMovie, "#the_movie .modal-content .include-modal",btn_modal_best_movie,btn_close_modal_best_movie, url_best_movie);
+  addActionModalMovie("#the_movie .modal-content .include-modal",btn_modal_best_movie,btn_close_modal_best_movie, url_best_movie);
   return best_movies_url
 }
 
 async function main () {
-  best_movies_url = await manageBestMovie();
-  i=0
-  //add_best__other_movies(best_movies_url, i);
-  
-  moviesIntoCarousel("#best_movies", best_movies_url);
+  best_movies_url = await manageBestMovie();  
+  moviesIntoCarrousel("#best_movies", best_movies_url);
 }
 
 main()

@@ -176,7 +176,7 @@ header div.row nav ul li a:hover {
 .container section .row .btn_carroussel {
   width: 5%;
 }
-.container section .row .carroussel {
+.container section .row .carrousel {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -184,19 +184,23 @@ header div.row nav ul li a:hover {
   flex-wrap: wrap;
   width: 90%;
 }
-.container section .row .carroussel div {
+.container section .row .carrousel div {
   padding: 5px;
 }
-.container section .row .carroussel div h3 {
+.container section .row .carrousel div h3 {
   height: 15%;
   word-wrap: break-word;
   margin-bottom: -15px;
   text-align: center;
 }
-.container section .row .carroussel div img {
+.container section .row .carrousel div img {
   width: auto;
   display: block;
   text-align: center;
+  cursor: help;
+}
+.container section .row .carrousel .modal-content img {
+  cursor: default;
 }
 
 .row {
@@ -237,6 +241,9 @@ header div.row nav ul li a:hover {
   justify-content: space-around;
   align-content: center;
   flex-wrap: wrap;
+}
+.modal .modal-content img {
+  cursor: default;
 }
 
 footer {
