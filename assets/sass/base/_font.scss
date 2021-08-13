@@ -1,7 +1,6 @@
 @import "../utils/variables";
 
 @mixin style_h ($color_text: $color_heading, $color_shadow : black) {
-    padding: -5px;
     color: $color_text;
     text-align: center;
     text-shadow: 2px 2px 12px  $color_shadow;
