@@ -202,6 +202,8 @@ function addActionModalMovie (divModal, btnModal, btnExit, url_movie) {
     div_modal_right.appendChild(img_movie);
     });
   let myDivMain = document.querySelector((monStockage.getItem("myDivModal")).replace(".modal-content .include-modal",".modal"))
+  btnModal = document.querySelector("#the_movie .movie button");
+
   btnModal.addEventListener('click', function() {
     myDivMain.style.display = "block"
   });
