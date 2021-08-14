@@ -61,3 +61,5 @@ function addSliderIntoDiv (idDiv) {
 
 addSliderIntoDiv("#best_movies", 7, 3);
 addSliderIntoDiv("#cat1", 7, 3);
+addSliderIntoDiv("#cat2", 7, 3);
+addSliderIntoDiv("#cat3", 7, 3);

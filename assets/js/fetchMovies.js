@@ -278,7 +278,7 @@ async function manageCat2Movie () {
 }
 
 async function manageCat3Movie () {
-  let cat3_movies = await extract_7_movies("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Adult", "cat3")
+  let cat3_movies = await extract_7_movies("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Comedy", "cat3")
   moviesIntoCarrousel("#cat3_movies", cat3_movies);
 }
 
