@@ -191,7 +191,6 @@ async function remove_the_best_movie_from_list (best_movies_url, url_best_movie)
 async function moviesIntoCarrousel(idDivCarrousel, MoviesList) {
   i=1
   for (movieUrl of MoviesList ) {
-    console.log(idDivCarrousel, movieUrl, i)
     addMovieIntoIdDiv(idDivCarrousel, movieUrl, i)
     i++
   }
@@ -233,8 +232,7 @@ function addActionModalMovie (divModal, btnModal, btnExit, url_movie) {
     });
   let myDivMain = document.querySelector((monStockage.getItem("myDivModal")).replace(".modal-content .include-modal",".modal"))
   btnModal = document.querySelector("#the_movie .movie button");
-
-  btnModal.addEventListener('click', function() {
+  document.querySelector("#the_movie .movie button").addEventListener('click', function() {
     myDivMain.style.display = "block"
   });
   btnExit.addEventListener('click', function() {
