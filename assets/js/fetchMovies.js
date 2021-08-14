@@ -1,7 +1,7 @@
 monStockage = sessionStorage;
+let adresseServeur = "http://193.26.22.227:8000/"
 
-
-async function addBestMovie(urlBestMovie) {
+function addBestMovie(urlBestMovie) {
   fetch(urlBestMovie)
   .then(function(res) {
     if(res.ok){
@@ -25,8 +25,8 @@ async function addBestMovie(urlBestMovie) {
   })
 }
 
-async function extract_8_best_movies() {
-  fetch("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score")
+function extract_8_best_movies(url) {
+  fetch(url)
   .then(function(res) {if(res.ok){return res.json()}})
   .then(function(value) {
     monStockage.setItem("1_best_movies", value.results[0].url+"####"+value.results[0].imdb_score+"####"+value.results[0].votes);
@@ -42,9 +42,10 @@ async function extract_8_best_movies() {
       monStockage.setItem("8_best_movies", value.results[2].url+"####"+value.results[2].imdb_score+"####"+value.results[2].votes);
   });
   });
+  return true
 };
 
-async function extract_7_movies(url, categorie) {
+function extract_7_movies(url, categorie) {
   fetch(url)
   .then(function(res) {if(res.ok){return res.json()}})
   .then(function(value) {
@@ -71,15 +72,13 @@ async function extract_7_movies(url, categorie) {
   return cat1_movies
 };
 
-async function addMovieIntoIdDiv(idDivCarrousel, urlMovie, indexMovie){
+function addMovieIntoIdDiv(idDivCarrousel, urlMovie, indexMovie){
   fetch(String(urlMovie))
   .then(function(res) {
     if (res.ok) {return res.json();}})
   .then(function(value) {
     let divMovie = document.querySelector(idDivCarrousel+String(indexMovie))
-    console.log(divMovie)
     let movieImg = document.querySelector(idDivCarrousel+String(indexMovie)+" div");
-    console.log(movieImg)
     movieImg.innerHTML = "<img src="+value.image_url+"/>";
     movieImg.setAttribute("id", idDivCarrousel.replace("#","")+"img_movie"+String(indexMovie))
     divMovie.appendChild(movieImg);
@@ -127,7 +126,7 @@ async function addMovieIntoIdDiv(idDivCarrousel, urlMovie, indexMovie){
   });  
 };
 
-async function search_best_movie_score_vote (best_movies_url) {
+function search_best_movie_score_vote (best_movies_url) {
   let movies_score = new Map();
   let movies_vote = new Map();
   movies_score.set(best_movies_url[0].split("####")[0], best_movies_url[0].split("####")[1]);
@@ -176,7 +175,7 @@ async function search_best_movie_score_vote (best_movies_url) {
   }
   return url_best_movie
 };
-async function remove_the_best_movie_from_list (best_movies_url, url_best_movie) {
+function remove_the_best_movie_from_list (best_movies_url, url_best_movie) {
   i=0
   for (let element of best_movies_url) {
     if ((element.split("####")[0]) == url_best_movie) {
@@ -188,7 +187,7 @@ async function remove_the_best_movie_from_list (best_movies_url, url_best_movie)
   }
   return best_movies_url
 };
-async function moviesIntoCarrousel(idDivCarrousel, MoviesList) {
+function moviesIntoCarrousel(idDivCarrousel, MoviesList) {
   i=1
   for (movieUrl of MoviesList ) {
     addMovieIntoIdDiv(idDivCarrousel, movieUrl, i)
@@ -246,8 +245,7 @@ function addActionModalMovie (divModal, btnModal, btnExit, url_movie) {
 
 };
 
-async function manageBestMovie () {
-  await extract_8_best_movies()
+function manageBestMovie () {
   let best_movies_url = [monStockage.getItem("1_best_movies"),
   monStockage.getItem("2_best_movies"),
   monStockage.getItem("3_best_movies"),
@@ -256,38 +254,42 @@ async function manageBestMovie () {
   monStockage.getItem("6_best_movies"),
   monStockage.getItem("7_best_movies"),
   monStockage.getItem("8_best_movies")];
-  let url_best_movie = await search_best_movie_score_vote(best_movies_url);
-  addBestMovie(url_best_movie);
-  best_movies_url = await remove_the_best_movie_from_list(best_movies_url, url_best_movie);
-  let btn_modal_best_movie = document.querySelector("#the_movie .movie button");
-  let btn_close_modal_best_movie = document.querySelector("#the_movie .btn_close")
-  addActionModalMovie("#the_movie .modal-content .include-modal",btn_modal_best_movie,btn_close_modal_best_movie, url_best_movie);
-  return best_movies_url
+  let url_best_movie = search_best_movie_score_vote(best_movies_url);
+  let listbest_movies_url = remove_the_best_movie_from_list(best_movies_url, url_best_movie);
+  try {addBestMovie(url_best_movie)} catch (error) {console.error(error)};  
+  try {moviesIntoCarrousel("#best_movies", listbest_movies_url)} catch (error) {console.error(error)};
+  /*
+  addActionModalMovie("#the_movie .modal-content .include-modal",
+                      document.querySelector("#the_movie .movie button"),
+                      document.querySelector("#the_movie .btn_close"),
+                      url_best_movie);*/
 }
 
 async function manageCat1Movie () {
-  let cat1_movies = await extract_7_movies("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Fantasy", "cat1")
+  let cat1_movies = await extract_7_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score&genre=Fantasy", "cat1")
   moviesIntoCarrousel("#cat1_movies", cat1_movies);
 }
 
 async function manageCat2Movie () {
-  let cat2_movies = await extract_7_movies("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Western", "cat2")
+  let cat2_movies = await extract_7_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score&genre=Western", "cat2")
   moviesIntoCarrousel("#cat2_movies", cat2_movies);
 }
 
 async function manageCat3Movie () {
-  let cat3_movies = await extract_7_movies("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Comedy", "cat3")
+  let cat3_movies = await extract_7_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score&genre=Comedy", "cat3")
   moviesIntoCarrousel("#cat3_movies", cat3_movies);
 }
 
+async function best8movies () {
+  let run = await extract_8_best_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score")
+  manageBestMovie(); 
+ }
+
 async function main () {
-  best_movies_url = await manageBestMovie();  
-  moviesIntoCarrousel("#best_movies", best_movies_url);
+  best8movies();
   manageCat1Movie();
   manageCat2Movie();
   manageCat3Movie();
 }
 
 main()
-
-//http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Fantasy
