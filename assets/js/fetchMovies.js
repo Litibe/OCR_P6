@@ -237,9 +237,23 @@ async function manageBestMovie () {
   return best_movies_url
 }
 
+async function manageCat1Movie () {
+  await extract_8_best_movies()
+  let best_movies_url = [monStockage.getItem("1_best_movies"),
+  monStockage.getItem("2_best_movies"),
+  monStockage.getItem("3_best_movies"),
+  monStockage.getItem("4_best_movies"),
+  monStockage.getItem("5_best_movies"),
+  monStockage.getItem("6_best_movies"),
+  monStockage.getItem("7_best_movies"),
+  monStockage.getItem("8_best_movies")];
+}
+
 async function main () {
   best_movies_url = await manageBestMovie();  
   moviesIntoCarrousel("#best_movies", best_movies_url);
 }
 
 main()
+
+//http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Fantasy
