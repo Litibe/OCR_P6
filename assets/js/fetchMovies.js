@@ -44,16 +44,45 @@ async function extract_8_best_movies() {
   });
 };
 
+async function extract_7_movies(url, categorie) {
+  fetch(url)
+  .then(function(res) {if(res.ok){return res.json()}})
+  .then(function(value) {
+    monStockage.setItem("1_"+categorie, value.results[0].url);
+    monStockage.setItem("2_"+categorie, value.results[1].url);
+    monStockage.setItem("3_"+categorie, value.results[2].url);
+    monStockage.setItem("4_"+categorie, value.results[3].url);
+    monStockage.setItem("5_"+categorie, value.results[4].url);
+    fetch(value.next)
+    .then(function(res) {if(res.ok){return res.json()}})
+    .then(function(value) {
+      monStockage.setItem("6_"+categorie, value.results[0].url);
+      monStockage.setItem("7_"+categorie, value.results[1].url);
+  });
+  });
+
+  let cat1_movies = [monStockage.getItem("1_"+categorie),
+  monStockage.getItem("2_"+categorie),
+  monStockage.getItem("3_"+categorie),
+  monStockage.getItem("4_"+categorie),
+  monStockage.getItem("5_"+categorie),
+  monStockage.getItem("6_"+categorie),
+  monStockage.getItem("7_"+categorie),];
+  return cat1_movies
+};
+
 async function addMovieIntoIdDiv(idDivCarrousel, urlMovie, indexMovie){
   fetch(String(urlMovie))
   .then(function(res) {
     if (res.ok) {return res.json();}})
   .then(function(value) {
     let divMovie = document.querySelector(idDivCarrousel+String(indexMovie))
-    let movieiImg = document.querySelector(idDivCarrousel+String(indexMovie)+" div");
-    movieiImg.innerHTML = "<img src="+value.image_url+"/>";
-    movieiImg.setAttribute("id", idDivCarrousel.replace("#","")+"img_movie"+String(indexMovie))
-    divMovie.appendChild(movieiImg);
+    console.log(divMovie)
+    let movieImg = document.querySelector(idDivCarrousel+String(indexMovie)+" div");
+    console.log(movieImg)
+    movieImg.innerHTML = "<img src="+value.image_url+"/>";
+    movieImg.setAttribute("id", idDivCarrousel.replace("#","")+"img_movie"+String(indexMovie))
+    divMovie.appendChild(movieImg);
     let newDivMovieMainModal = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal");
     let newDivMovieMainModalContent = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal-content");
     let newDivMovieMainModalContentH2 = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal-content h2");
@@ -162,6 +191,7 @@ async function remove_the_best_movie_from_list (best_movies_url, url_best_movie)
 async function moviesIntoCarrousel(idDivCarrousel, MoviesList) {
   i=1
   for (movieUrl of MoviesList ) {
+    console.log(idDivCarrousel, movieUrl, i)
     addMovieIntoIdDiv(idDivCarrousel, movieUrl, i)
     i++
   }
@@ -238,20 +268,26 @@ async function manageBestMovie () {
 }
 
 async function manageCat1Movie () {
-  await extract_8_best_movies()
-  let best_movies_url = [monStockage.getItem("1_best_movies"),
-  monStockage.getItem("2_best_movies"),
-  monStockage.getItem("3_best_movies"),
-  monStockage.getItem("4_best_movies"),
-  monStockage.getItem("5_best_movies"),
-  monStockage.getItem("6_best_movies"),
-  monStockage.getItem("7_best_movies"),
-  monStockage.getItem("8_best_movies")];
+  let cat1_movies = await extract_7_movies("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Fantasy", "cat1")
+  moviesIntoCarrousel("#cat1_movies", cat1_movies);
+}
+
+async function manageCat2Movie () {
+  let cat2_movies = await extract_7_movies("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Western", "cat2")
+  moviesIntoCarrousel("#cat2_movies", cat2_movies);
+}
+
+async function manageCat3Movie () {
+  let cat3_movies = await extract_7_movies("http://localhost:8000/api/v1/titles/?sort_by=-imdb_score&genre=Adult", "cat3")
+  moviesIntoCarrousel("#cat3_movies", cat3_movies);
 }
 
 async function main () {
   best_movies_url = await manageBestMovie();  
   moviesIntoCarrousel("#best_movies", best_movies_url);
+  manageCat1Movie();
+  manageCat2Movie();
+  manageCat3Movie();
 }
 
 main()
