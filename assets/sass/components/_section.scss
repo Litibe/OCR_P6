@@ -18,6 +18,10 @@
         margin: 15px;
         .container{
             @include flexrow_space_around;
+            .movieDetails{
+                width: 45%;
+                padding-bottom: 5px;
+            }
             margin: auto;
             .row{
                 @include flexrow_space_around;

@@ -1,31 +1,31 @@
 monStockage = sessionStorage;
 let adresseServeur = "http://193.26.22.227:8000/"
 
-function addBestMovie(urlBestMovie) {
+function addInfoBestMovie(urlBestMovie) {
   fetch(urlBestMovie)
-  .then(function(res) {
-    if(res.ok){
-      return res.json()
-    }
-  })
+  .then(function(res) {if(res.ok){return res.json()}})
   .then(function(value) {
-    let section_the_movie_div_title = document.querySelector("#best_movie0 .title_movie");
-    let section_the_movie_div_resume = document.querySelector("#best_movie0 .movie .resume");
-    let section_the_movie_div_button_movie = document.querySelector("#best_movie0 .movie button");
-    let section_the_movie_div_note = document.querySelector("#best_movie0 p.note");
-    let section_the_movie_img = document.querySelector("#best_movie0 div");
-    section_the_movie_img.setAttribute("id", "best_movieimg_movie0")
-    section_the_movie_img.innerHTML = "<img src=" + value.image_url + " alt="+ String(value.title) + " title="+String(value.title) + "/>"
-    section_the_movie_div_title.innerHTML = value.title;
-    section_the_movie_div_button_movie.classList.remove("hidden");
-    section_the_movie_div_resume.innerHTML = "Résume du film : "
-    section_the_movie_div_note.innerHTML = "Note du film : " + value.imdb_score
-    let section_the_movie_div_description_p = document.querySelector("#best_movie0 p.long_description");
-    section_the_movie_div_description_p.innerHTML = "<p> "+ String(value.long_description) + "</p>"; 
+    let movieTitle = document.querySelector("#best_movie0 .title_movie");
+    let movieResume = document.querySelector("#best_movie0 .movieDetails .resume");
+    let movieBtnInfo = document.querySelector("#best_movie0 .movieDetails button");
+    let movieScoreImdb = document.querySelector("#best_movie0 .movieDetails p.note");
+    movieTitle.innerHTML = value.title;
+    movieBtnInfo.classList.remove("hidden");
+    movieResume.innerHTML = "Résume du film : "
+    movieScoreImdb.innerHTML = "Note du film : " + value.imdb_score
+    let movieLongDescription = document.querySelector("#best_movie0 .movieDetails p.long_description");
+    movieLongDescription.innerHTML = "<p> "+ String(value.long_description) + "</p>"; 
+
+    let newDivMovieMainModal = document.querySelector("#best_movie0 .modal");
+    movieBtnInfo.addEventListener('click', function() {
+      newDivMovieMainModal.style.display = "block"
+      });
+
+
   })
 }
 
-async function extract_8_best_movies(url) {
+function extract_8_best_movies(url) {
   fetch(url)
   .then(function(res) {if(res.ok){return res.json()}})
   .then(function(value) {
@@ -44,9 +44,9 @@ async function extract_8_best_movies(url) {
     })
     .then(function(value){
       let url_best_movie = search_best_movie_score_vote(myList);
-      addBestMovie(url_best_movie)
       let listbest_movies_url = remove_the_best_movie_from_list(myList, url_best_movie);
       addMovieIntoIdDiv("#best_movie", url_best_movie,0)
+      addInfoBestMovie(url_best_movie)
       return listbest_movies_url
     })
     .then(function(value){
@@ -98,14 +98,11 @@ function addMovieIntoIdDiv(idDivCarrousel, urlMovie, indexMovie){
     let newDivMovieMainModalContent = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal-content");
     let newDivMovieMainModalContentH2 = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal-content h2");
     let newDivMovieMainModalContentInclude = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal-content .include-modal");
-    
     let btnExit = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal-content .btn_close")
-    
     let div_modal_left = document.createElement("div");
     div_modal_left.classList.add(idDivCarrousel+"modalLeftMovie"+String(indexMovie))
     let div_modal_right= document.createElement("div");
     div_modal_right.classList.add(idDivCarrousel+"modalRightMovie"+String(indexMovie))
-    console.log(value.title)
     newDivMovieMainModalContentH2.innerHTML = value.title;
     newDivMovieMainModalContentInclude.appendChild(div_modal_left);
     let actors_movie = "";
@@ -208,56 +205,6 @@ function moviesIntoCarrousel(idDivCarrousel, MoviesList) {
   }
 };
 
-function addActionModalMovie (divModal, btnModal, btnExit, url_movie) {
-  fetch(url_movie)
-  .then(function(res) {
-    if(res.ok){
-      return res.json();
-    }
-  })
-  .then(function(value) {
-    let myDivModal = document.querySelector(divModal);
-    let div_modal_left = document.createElement("div");
-    let div_modal_right= document.createElement("div");
-    let title_best_movie = document.querySelector("#the_movie .container .modal .modal-content h2");
-    title_best_movie.innerHTML = value.title;
-    myDivModal.appendChild(div_modal_left);
-    let actors_movie = "";
-    for (let actor of value.actors) {actors_movie += actor + ", "};
-    let info_left = "<ul><li>Genres : " + value.genres +
-                  "</li>" + "<li>Date published : " + value.date_published + "</li>"
-                  + "<li>Rated : " + value.rated + "</li>"
-                  + "<li>Score Imdb : " + value.imdb + "</li>"
-                  + "<li>Directors : " + value.directors + "</li>"
-                  + "<li>Actors : " + actors_movie +"</li>"
-                  + "<li>Duration : " + value.duration +"</li>"
-                  + "<li>Countries : " + value.countries +"</li>"
-                  + "<li>Reviews from critics : " + value.reviews_from_critics +"</li>"
-                  + "<li>Description : " + value.long_description + "</li>"
-                  +"</ul>";
-    div_modal_left.innerHTML = info_left;
-    myDivModal.appendChild(div_modal_right);
-    img_movie = document.createElement('div');
-    img_movie.innerHTML = "<img src="+value.image_url+"/>";
-    div_modal_right.appendChild(img_movie);
-    });
-  let myDivMain = document.querySelector((monStockage.getItem("myDivModal")).replace(".modal-content .include-modal",".modal"))
-  btnModal = document.querySelector("#the_movie .movie button");
-  document.querySelector("#the_movie .movie button").addEventListener('click', function() {
-    myDivMain.style.display = "block"
-  });
-  btnExit.addEventListener('click', function() {
-    myDivMain.style.display = "none"
-  });
-  // When the user clicks anywhere outside of the modal, close it
-  window.addEventListener('click', function(event) {
-    if (event.target == myDivMain) {
-      myDivMain.style.display = "none";}
-  });
-
-};
-
-
 async function manageCat1Movie () {
   let cat1_movies = await extract_7_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score&genre=Fantasy", "cat1")
   moviesIntoCarrousel("#cat1_movies", cat1_movies);
@@ -275,10 +222,10 @@ async function manageCat3Movie () {
 
 
 async function main () {
-  extract_8_best_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score")
+  //extract_8_best_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score")
   manageCat1Movie();
-  manageCat2Movie();
-  manageCat3Movie();
+  //manageCat2Movie();
+  //manageCat3Movie();
 }
 
 main()

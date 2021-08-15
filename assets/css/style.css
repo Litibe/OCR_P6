@@ -178,6 +178,10 @@ header div.row nav ul li a:hover {
   flex-wrap: wrap;
   margin: auto;
 }
+.container section .container .movieDetails {
+  width: 45%;
+  padding-bottom: 5px;
+}
 .container section .container .row {
   display: flex;
   flex-direction: row;
