@@ -131,6 +131,25 @@ header div.row nav ul li a:hover {
   color: #a2fda2;
 }
 
+.page {
+  display: none;
+  padding: 0 0.5em;
+}
+
+#loading {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  width: 100vw;
+  height: 100vh;
+  background-color: #3a0909;
+  background-image: url("./static/img/loading_litiboost.gif");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
 .container {
   animation-name: slideDownFadeIN;
   animation-duration: 1.5s;
