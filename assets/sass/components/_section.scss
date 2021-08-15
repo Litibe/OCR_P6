@@ -5,7 +5,7 @@
 
     @include flexcolumn_space_around;
     word-wrap: break-word ;
-    width: 90%;
+    width: 95%;
     margin:auto ;
     margin-top: 4%;
     margin-bottom: 4%;
@@ -13,13 +13,12 @@
         width: 100%;
         background-color: rgba(245, 226, 199, 0.938);
         border: 2px solid $color_border_section;
-        margin: 5px;
+        margin: 15px;
         .container{
-            .oneline{
+            .row{
                 @include flexrow_space_around;
                 margin: 5px;
-                color:burlywood;
-                color: rgb(56, 51, 51);
+                padding-bottom: -15px;
                 .movie{
                     width: 65%;
                     margin: 5px;
@@ -33,7 +32,7 @@
            
         }
         .row{
-
+            margin-bottom: 15px;
             @include flexrow_space_between;
             .btn_carrousel{   
                 margin: auto;
@@ -46,7 +45,7 @@
                 @include flexrow_space_around;
                 width: 90%;
                 & div {
-                    padding: 5px;
+                    padding: 2px;
                     & h3 {
                         height: 15%;
                         word-wrap: break-word ;
@@ -54,7 +53,7 @@
                         text-align: center;
                     }
                     & img{
-                        width: auto;
+                        width: 80%;
                         display: block;
                         text-align: center;
                         cursor: help;
