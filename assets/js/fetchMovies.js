@@ -196,7 +196,6 @@ function moviesIntoCarrousel(idDivCarrousel, MoviesList) {
 };
 
 function addActionModalMovie (divModal, btnModal, btnExit, url_movie) {
-  monStockage.setItem("myDivModal", divModal);
   fetch(url_movie)
   .then(function(res) {
     if(res.ok){
@@ -204,7 +203,7 @@ function addActionModalMovie (divModal, btnModal, btnExit, url_movie) {
     }
   })
   .then(function(value) {
-    let myDivModal = document.querySelector(monStockage.getItem("myDivModal"));
+    let myDivModal = document.querySelector(divModal);
     let div_modal_left = document.createElement("div");
     let div_modal_right= document.createElement("div");
     let title_best_movie = document.querySelector("#the_movie .container .modal .modal-content h2");
