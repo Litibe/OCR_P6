@@ -1,20 +1,24 @@
 @import "../layout/animations";
 
 .container{
-    @include animate_fade_in;
-
     @include flexcolumn_space_around;
     word-wrap: break-word ;
     width: 95%;
-    margin:auto ;
     margin-top: 4%;
     margin-bottom: 4%;
+    #title {
+        h1 {
+            padding-top: 15px;
+        }
+    }
     section{
         width: 100%;
         background-color: rgba(245, 226, 199, 0.938);
         border: 2px solid $color_border_section;
         margin: 15px;
         .container{
+            @include flexrow_space_around;
+            margin: auto;
             .row{
                 @include flexrow_space_around;
                 margin: 5px;

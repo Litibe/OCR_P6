@@ -151,8 +151,6 @@ header div.row nav ul li a:hover {
 }
 
 .container {
-  animation-name: slideDownFadeIN;
-  animation-duration: 1.5s;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -160,15 +158,25 @@ header div.row nav ul li a:hover {
   flex-wrap: wrap;
   word-wrap: break-word;
   width: 95%;
-  margin: auto;
   margin-top: 4%;
   margin-bottom: 4%;
+}
+.container #title h1 {
+  padding-top: 15px;
 }
 .container section {
   width: 100%;
   background-color: rgba(245, 226, 199, 0.938);
   border: 2px solid #811c1c;
   margin: 15px;
+}
+.container section .container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  flex-wrap: wrap;
+  margin: auto;
 }
 .container section .container .row {
   display: flex;

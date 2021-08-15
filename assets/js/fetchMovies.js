@@ -9,39 +9,51 @@ function addBestMovie(urlBestMovie) {
     }
   })
   .then(function(value) {
-    let section_the_movie_div_title = document.querySelector("#the_movie .movie h3");
-    let section_the_movie_div_resume = document.querySelector("#the_movie .movie h4");
-    let section_the_movie_div_button_movie = document.querySelector("#the_movie .movie button");
-    let section_the_movie_div_note = document.querySelector("#the_movie p.note");
-    let section_the_movie_img = document.querySelector("#the_movie div.img_movie p");
-    let url_image = value.image_url;
-    section_the_movie_img.innerHTML = "<img src=" + url_image + " alt="+ String(value.title) + " title="+String(value.title) + "/> <br/> "
+    let section_the_movie_div_title = document.querySelector("#best_movie0 .title_movie");
+    let section_the_movie_div_resume = document.querySelector("#best_movie0 .movie .resume");
+    let section_the_movie_div_button_movie = document.querySelector("#best_movie0 .movie button");
+    let section_the_movie_div_note = document.querySelector("#best_movie0 p.note");
+    let section_the_movie_img = document.querySelector("#best_movie0 div");
+    section_the_movie_img.setAttribute("id", "best_movieimg_movie0")
+    section_the_movie_img.innerHTML = "<img src=" + value.image_url + " alt="+ String(value.title) + " title="+String(value.title) + "/>"
     section_the_movie_div_title.innerHTML = value.title;
     section_the_movie_div_button_movie.classList.remove("hidden");
     section_the_movie_div_resume.innerHTML = "Résume du film : "
     section_the_movie_div_note.innerHTML = "Note du film : " + value.imdb_score
-    let section_the_movie_div_description_p = document.querySelector("#the_movie p.long_description");
+    let section_the_movie_div_description_p = document.querySelector("#best_movie0 p.long_description");
     section_the_movie_div_description_p.innerHTML = "<p> "+ String(value.long_description) + "</p>"; 
   })
 }
 
-function extract_8_best_movies(url) {
+async function extract_8_best_movies(url) {
   fetch(url)
   .then(function(res) {if(res.ok){return res.json()}})
   .then(function(value) {
-    monStockage.setItem("1_best_movies", value.results[0].url+"####"+value.results[0].imdb_score+"####"+value.results[0].votes);
-    monStockage.setItem("2_best_movies", value.results[1].url+"####"+value.results[1].imdb_score+"####"+value.results[1].votes);
-    monStockage.setItem("3_best_movies", value.results[2].url+"####"+value.results[2].imdb_score+"####"+value.results[2].votes);
-    monStockage.setItem("4_best_movies", value.results[3].url+"####"+value.results[3].imdb_score+"####"+value.results[3].votes);
-    monStockage.setItem("5_best_movies", value.results[4].url+"####"+value.results[4].imdb_score+"####"+value.results[4].votes);
+    let myList=[]
+    myList.push(value.results[0].url+"####"+value.results[0].imdb_score+"####"+value.results[0].votes);
+    myList.push(value.results[1].url+"####"+value.results[1].imdb_score+"####"+value.results[1].votes);
+    myList.push(value.results[2].url+"####"+value.results[2].imdb_score+"####"+value.results[2].votes);
+    myList.push(value.results[3].url+"####"+value.results[3].imdb_score+"####"+value.results[3].votes);
+    myList.push(value.results[4].url+"####"+value.results[4].imdb_score+"####"+value.results[4].votes);
     fetch(value.next)
     .then(function(res) {if(res.ok){return res.json()}})
     .then(function(value) {
-      monStockage.setItem("6_best_movies", value.results[0].url+"####"+value.results[0].imdb_score+"####"+value.results[0].votes);
-      monStockage.setItem("7_best_movies", value.results[1].url+"####"+value.results[1].imdb_score+"####"+value.results[1].votes);
-      monStockage.setItem("8_best_movies", value.results[2].url+"####"+value.results[2].imdb_score+"####"+value.results[2].votes);
+      myList.push(value.results[0].url+"####"+value.results[0].imdb_score+"####"+value.results[0].votes);
+      myList.push(value.results[1].url+"####"+value.results[1].imdb_score+"####"+value.results[1].votes);
+      myList.push(value.results[2].url+"####"+value.results[2].imdb_score+"####"+value.results[2].votes);
+    })
+    .then(function(value){
+      let url_best_movie = search_best_movie_score_vote(myList);
+      addBestMovie(url_best_movie)
+      let listbest_movies_url = remove_the_best_movie_from_list(myList, url_best_movie);
+      addMovieIntoIdDiv("#best_movie", url_best_movie,0)
+      return listbest_movies_url
+    })
+    .then(function(value){
+      moviesIntoCarrousel("#best_movies", value);
+    })
   });
-  });
+  
   return true
 };
 
@@ -79,19 +91,21 @@ function addMovieIntoIdDiv(idDivCarrousel, urlMovie, indexMovie){
   .then(function(value) {
     let divMovie = document.querySelector(idDivCarrousel+String(indexMovie))
     let movieImg = document.querySelector(idDivCarrousel+String(indexMovie)+" div");
-    movieImg.innerHTML = "<img src="+value.image_url+"/>";
+    movieImg.innerHTML = "<img src="+value.image_url+ " alt="+ value.title + " title="+ value.title + "/>";
     movieImg.setAttribute("id", idDivCarrousel.replace("#","")+"img_movie"+String(indexMovie))
     divMovie.appendChild(movieImg);
     let newDivMovieMainModal = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal");
     let newDivMovieMainModalContent = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal-content");
     let newDivMovieMainModalContentH2 = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal-content h2");
     let newDivMovieMainModalContentInclude = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal-content .include-modal");
+    
     let btnExit = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal-content .btn_close")
     
     let div_modal_left = document.createElement("div");
     div_modal_left.classList.add(idDivCarrousel+"modalLeftMovie"+String(indexMovie))
     let div_modal_right= document.createElement("div");
     div_modal_right.classList.add(idDivCarrousel+"modalRightMovie"+String(indexMovie))
+    console.log(value.title)
     newDivMovieMainModalContentH2.innerHTML = value.title;
     newDivMovieMainModalContentInclude.appendChild(div_modal_left);
     let actors_movie = "";
@@ -179,7 +193,6 @@ function remove_the_best_movie_from_list (best_movies_url, url_best_movie) {
   i=0
   for (let element of best_movies_url) {
     if ((element.split("####")[0]) == url_best_movie) {
-      
       best_movies_url.splice(i, 1)
     } else {
       i +=1
@@ -244,25 +257,6 @@ function addActionModalMovie (divModal, btnModal, btnExit, url_movie) {
 
 };
 
-function manageBestMovie () {
-  let best_movies_url = [monStockage.getItem("1_best_movies"),
-  monStockage.getItem("2_best_movies"),
-  monStockage.getItem("3_best_movies"),
-  monStockage.getItem("4_best_movies"),
-  monStockage.getItem("5_best_movies"),
-  monStockage.getItem("6_best_movies"),
-  monStockage.getItem("7_best_movies"),
-  monStockage.getItem("8_best_movies")];
-  let url_best_movie = search_best_movie_score_vote(best_movies_url);
-  let listbest_movies_url = remove_the_best_movie_from_list(best_movies_url, url_best_movie);
-  try {addBestMovie(url_best_movie)} catch (error) {console.error(error)};  
-  try {moviesIntoCarrousel("#best_movies", listbest_movies_url)} catch (error) {console.error(error)};
-  /*
-  addActionModalMovie("#the_movie .modal-content .include-modal",
-                      document.querySelector("#the_movie .movie button"),
-                      document.querySelector("#the_movie .btn_close"),
-                      url_best_movie);*/
-}
 
 async function manageCat1Movie () {
   let cat1_movies = await extract_7_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score&genre=Fantasy", "cat1")
@@ -279,13 +273,9 @@ async function manageCat3Movie () {
   moviesIntoCarrousel("#cat3_movies", cat3_movies);
 }
 
-async function best8movies () {
-  let run = await extract_8_best_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score")
-  manageBestMovie(); 
- }
 
 async function main () {
-  best8movies();
+  extract_8_best_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score")
   manageCat1Movie();
   manageCat2Movie();
   manageCat3Movie();
