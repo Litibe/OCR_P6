@@ -53,35 +53,28 @@ function extract_8_best_movies(url) {
       moviesIntoCarrousel("#best_movies", value);
     })
   });
-  
-  return true
 };
 
 function extract_7_movies(url, categorie) {
   fetch(url)
   .then(function(res) {if(res.ok){return res.json()}})
   .then(function(value) {
-    monStockage.setItem("1_"+categorie, value.results[0].url);
-    monStockage.setItem("2_"+categorie, value.results[1].url);
-    monStockage.setItem("3_"+categorie, value.results[2].url);
-    monStockage.setItem("4_"+categorie, value.results[3].url);
-    monStockage.setItem("5_"+categorie, value.results[4].url);
+    let myList=[]
+    myList.push(value.results[0].url);
+    myList.push(value.results[1].url);
+    myList.push(value.results[2].url);
+    myList.push(value.results[3].url);
+    myList.push(value.results[4].url);
     fetch(value.next)
     .then(function(res) {if(res.ok){return res.json()}})
     .then(function(value) {
-      monStockage.setItem("6_"+categorie, value.results[0].url);
-      monStockage.setItem("7_"+categorie, value.results[1].url);
+      myList.push(value.results[0].url);
+      myList.push(value.results[1].url);
+    })
+    .then(function(value) {
+      moviesIntoCarrousel("#"+categorie+"_movies", myList);
+    })
   });
-  });
-
-  let cat1_movies = [monStockage.getItem("1_"+categorie),
-  monStockage.getItem("2_"+categorie),
-  monStockage.getItem("3_"+categorie),
-  monStockage.getItem("4_"+categorie),
-  monStockage.getItem("5_"+categorie),
-  monStockage.getItem("6_"+categorie),
-  monStockage.getItem("7_"+categorie),];
-  return cat1_movies
 };
 
 function addMovieIntoIdDiv(idDivCarrousel, urlMovie, indexMovie){
@@ -206,26 +199,23 @@ function moviesIntoCarrousel(idDivCarrousel, MoviesList) {
 };
 
 async function manageCat1Movie () {
-  let cat1_movies = await extract_7_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score&genre=Fantasy", "cat1")
-  moviesIntoCarrousel("#cat1_movies", cat1_movies);
+  extract_7_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score&genre=Fantasy", "cat1")
 }
 
 async function manageCat2Movie () {
-  let cat2_movies = await extract_7_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score&genre=Western", "cat2")
-  moviesIntoCarrousel("#cat2_movies", cat2_movies);
+  extract_7_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score&genre=Western", "cat2")
 }
 
 async function manageCat3Movie () {
-  let cat3_movies = await extract_7_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score&genre=Comedy", "cat3")
-  moviesIntoCarrousel("#cat3_movies", cat3_movies);
+  extract_7_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score&genre=Comedy", "cat3")
 }
 
 
 async function main () {
-  //extract_8_best_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score")
+  extract_8_best_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score")
   manageCat1Movie();
-  //manageCat2Movie();
-  //manageCat3Movie();
+  manageCat2Movie();
+  manageCat3Movie();
 }
 
 main()
