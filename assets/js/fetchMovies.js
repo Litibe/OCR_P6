@@ -1,5 +1,15 @@
 let adresseServeur = "http://193.26.22.227:8000/";
 
+async function main () {
+  extract_8_best_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score")
+  manageCategoryMovie("Fantasy", "cat1");
+  manageCategoryMovie("Western", "cat2");
+  manageCategoryMovie("Comedy", "cat3");
+}
+
+main()
+
+
 function addInfoBestMovie(urlBestMovie) {
   fetch(urlBestMovie)
   .then(function(res) {if(res.ok){return res.json()};})
@@ -43,11 +53,11 @@ function extract_8_best_movies(url) {
       myList.push(value.results[2].url+"####"+value.results[2].imdb_score+"####"+value.results[2].votes);
     })
     .then(function(value){
-      let url_best_movie = search_best_movie_score_vote(myList);
-      let listbest_movies_url = remove_the_best_movie_from_list(myList, url_best_movie);
-      addMovieIntoIdDiv("#best_movie", url_best_movie,0)
-      addInfoBestMovie(url_best_movie)
-      return listbest_movies_url
+      let urlBestMovie = searchTheBestMovie(myList);
+      let ArrayBestMoviesUrl = removeTheBestMovieUrlIntoArray(myList, urlBestMovie);
+      addMovieIntoIdDiv("#best_movie", urlBestMovie,0)
+      addInfoBestMovie(urlBestMovie)
+      return ArrayBestMoviesUrl
     })
     .then(function(value){
       moviesIntoCarrousel("#best_movies", value);
@@ -92,30 +102,30 @@ function addMovieIntoIdDiv(idDivCarrousel, urlMovie, indexMovie){
     let newDivMovieMainModalContentH2 = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal-content h2");
     let newDivMovieMainModalContentInclude = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal-content .include-modal");
     let btnExit = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal-content .btn_close");
-    let div_modal_left = document.createElement("div");
-    div_modal_left.classList.add(idDivCarrousel+"modalLeftMovie"+String(indexMovie));
-    let div_modal_right= document.createElement("div");
-    div_modal_right.classList.add(idDivCarrousel+"modalRightMovie"+String(indexMovie));
+    let DivModalLeft = document.createElement("div");
+    DivModalLeft.classList.add(idDivCarrousel+"modalLeftMovie"+String(indexMovie));
+    let DivModalRight = document.createElement("div");
+    DivModalRight.classList.add(idDivCarrousel+"modalRightMovie"+String(indexMovie));
     newDivMovieMainModalContentH2.innerHTML = value.title;
-    newDivMovieMainModalContentInclude.appendChild(div_modal_left);
-    let actors_movie = "";
-    for (let actor of value.actors) {actors_movie += actor + ", "};
-    let info_left = "<ul><li>Genres : " + value.genres +
+    newDivMovieMainModalContentInclude.appendChild(DivModalLeft);
+    let ActorsMovie = "";
+    for (let actor of value.actors) {ActorsMovie += actor + ", "};
+    let InfosDivModalLeft = "<ul><li>Genres : " + value.genres +
                   "</li>" + "<li>Date published : " + value.date_published + "</li>"
                   + "<li>Rated : " + value.rated + "</li>"
                   + "<li>Score Imdb : " + value.imdb + "</li>"
                   + "<li>Directors : " + value.directors + "</li>"
-                  + "<li>Actors : " + actors_movie +"</li>"
+                  + "<li>Actors : " + ActorsMovie +"</li>"
                   + "<li>Duration : " + value.duration +"</li>"
                   + "<li>Countries : " + value.countries +"</li>"
                   + "<li>Reviews from critics : " + value.reviews_from_critics +"</li>"
                   + "<li>Description : " + value.long_description + "</li>"
                   +"</ul>";
-    div_modal_left.innerHTML = info_left;
-    newDivMovieMainModalContentInclude.appendChild(div_modal_right);
-    img_movie = document.createElement('div');
-    img_movie.innerHTML = "<img src="+value.image_url+"/>";
-    div_modal_right.appendChild(img_movie);
+    DivModalLeft.innerHTML = InfosDivModalLeft;
+    newDivMovieMainModalContentInclude.appendChild(DivModalRight);
+    imgMovie = document.createElement('div');
+    imgMovie.innerHTML = "<img src="+value.image_url+"/>";
+    DivModalRight.appendChild(imgMovie);
     let btnModal = document.querySelector(idDivCarrousel+"img_movie"+String(indexMovie))
     btnModal.addEventListener('click', function() {
       newDivMovieMainModal.style.display = "block"
@@ -130,65 +140,65 @@ function addMovieIntoIdDiv(idDivCarrousel, urlMovie, indexMovie){
   });  
 };
 
-function search_best_movie_score_vote (best_movies_url) {
-  let movies_score = new Map();
-  let movies_vote = new Map();
-  movies_score.set(best_movies_url[0].split("####")[0], best_movies_url[0].split("####")[1]);
-  movies_vote.set(best_movies_url[0].split("####")[0], best_movies_url[0].split("####")[2]);
-  movies_score.set(best_movies_url[1].split("####")[0], best_movies_url[1].split("####")[1]);
-  movies_vote.set(best_movies_url[1].split("####")[0], best_movies_url[1].split("####")[2]);
-  movies_score.set(best_movies_url[2].split("####")[0], best_movies_url[2].split("####")[1]);
-  movies_vote.set(best_movies_url[2].split("####")[0], best_movies_url[2].split("####")[2]);
-  movies_score.set(best_movies_url[3].split("####")[0], best_movies_url[3].split("####")[1]);
-  movies_vote.set(best_movies_url[3].split("####")[0], best_movies_url[3].split("####")[2]);
-  movies_score.set(best_movies_url[4].split("####")[0], best_movies_url[4].split("####")[1]);
-  movies_vote.set(best_movies_url[4].split("####")[0], best_movies_url[4].split("####")[2]);
-  movies_score.set(best_movies_url[5].split("####")[0], best_movies_url[5].split("####")[1]);
-  movies_vote.set(best_movies_url[5].split("####")[0], best_movies_url[5].split("####")[2]);
-  movies_score.set(best_movies_url[6].split("####")[0], best_movies_url[6].split("####")[1]);
-  movies_vote.set(best_movies_url[6].split("####")[0],best_movies_url[6].split("####")[2]);
-  movies_score.set(best_movies_url[7].split("####")[0],best_movies_url[7].split("####")[1]);
-  movies_vote.set(best_movies_url[7].split("####")[0],best_movies_url[7].split("####")[2]);
+function searchTheBestMovie (ArrayBestMoviesUrl) {
+  let moviesScore = new Map();
+  let moviesVote = new Map();
+  moviesScore.set(ArrayBestMoviesUrl[0].split("####")[0], ArrayBestMoviesUrl[0].split("####")[1]);
+  moviesVote.set(ArrayBestMoviesUrl[0].split("####")[0], ArrayBestMoviesUrl[0].split("####")[2]);
+  moviesScore.set(ArrayBestMoviesUrl[1].split("####")[0], ArrayBestMoviesUrl[1].split("####")[1]);
+  moviesVote.set(ArrayBestMoviesUrl[1].split("####")[0], ArrayBestMoviesUrl[1].split("####")[2]);
+  moviesScore.set(ArrayBestMoviesUrl[2].split("####")[0], ArrayBestMoviesUrl[2].split("####")[1]);
+  moviesVote.set(ArrayBestMoviesUrl[2].split("####")[0], ArrayBestMoviesUrl[2].split("####")[2]);
+  moviesScore.set(ArrayBestMoviesUrl[3].split("####")[0], ArrayBestMoviesUrl[3].split("####")[1]);
+  moviesVote.set(ArrayBestMoviesUrl[3].split("####")[0], ArrayBestMoviesUrl[3].split("####")[2]);
+  moviesScore.set(ArrayBestMoviesUrl[4].split("####")[0], ArrayBestMoviesUrl[4].split("####")[1]);
+  moviesVote.set(ArrayBestMoviesUrl[4].split("####")[0], ArrayBestMoviesUrl[4].split("####")[2]);
+  moviesScore.set(ArrayBestMoviesUrl[5].split("####")[0], ArrayBestMoviesUrl[5].split("####")[1]);
+  moviesVote.set(ArrayBestMoviesUrl[5].split("####")[0], ArrayBestMoviesUrl[5].split("####")[2]);
+  moviesScore.set(ArrayBestMoviesUrl[6].split("####")[0], ArrayBestMoviesUrl[6].split("####")[1]);
+  moviesVote.set(ArrayBestMoviesUrl[6].split("####")[0],ArrayBestMoviesUrl[6].split("####")[2]);
+  moviesScore.set(ArrayBestMoviesUrl[7].split("####")[0],ArrayBestMoviesUrl[7].split("####")[1]);
+  moviesVote.set(ArrayBestMoviesUrl[7].split("####")[0],ArrayBestMoviesUrl[7].split("####")[2]);
     
-  let liste_score = []
-  for (let [key, value] of movies_score) {
-    liste_score.push(value);
+  let listeScore = []
+  for (let [key, value] of moviesScore) {
+    listeScore.push(value);
   }
-  liste_score.sort()
-  let best_score = liste_score[liste_score.length-1]
-  let liste_best_movies = []
-  for (let [key, value] of movies_score) {
-    if (value == best_score) {
-      liste_best_movies.push(key);}
+  listeScore.sort()
+  let bestScore = listeScore[listeScore.length-1]
+  let arrayBestMovies = []
+  for (let [key, value] of moviesScore) {
+    if (value == bestScore) {
+      arrayBestMovies.push(key);}
   }
-  let liste_votes_movies = []
-  for (let movie of liste_best_movies) {
-    for (let [key, value] of movies_vote) {
+  let arrayVoteMovies = []
+  for (let movie of arrayBestMovies) {
+    for (let [key, value] of moviesScore) {
       if (movie == key) {
-        liste_votes_movies.push(value);
+        arrayVoteMovies.push(value);
       }
     }
   }
-  liste_votes_movies.sort()
-  let url_best_movie
-  let best_vote = liste_votes_movies[liste_votes_movies.length-1]
-  for (let [key, value] of movies_vote) {
+  arrayVoteMovies.sort()
+  let urlBestMovie
+  let best_vote = arrayVoteMovies[arrayVoteMovies.length-1]
+  for (let [key, value] of moviesScore) {
     if (value == best_vote) {
-      url_best_movie = key;
+      urlBestMovie = key;
     }
   }
-  return url_best_movie
+  return urlBestMovie
 };
-function remove_the_best_movie_from_list (best_movies_url, url_best_movie) {
+function removeTheBestMovieUrlIntoArray (ArrayBestMoviesUrl, urlBestMovie) {
   i=0
-  for (let element of best_movies_url) {
-    if ((element.split("####")[0]) == url_best_movie) {
-      best_movies_url.splice(i, 1)
+  for (let element of ArrayBestMoviesUrl) {
+    if ((element.split("####")[0]) == urlBestMovie) {
+      ArrayBestMoviesUrl.splice(i, 1)
     } else {
       i +=1
     }
   }
-  return best_movies_url
+  return ArrayBestMoviesUrl
 };
 function moviesIntoCarrousel(idDivCarrousel, MoviesList) {
   i=1
@@ -198,24 +208,9 @@ function moviesIntoCarrousel(idDivCarrousel, MoviesList) {
   }
 };
 
-async function manageCat1Movie () {
-  extract_7_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score&genre=Fantasy", "cat1")
+async function manageCategoryMovie (genreMovie, idSection) {
+  extract_7_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score&genre="+String(genreMovie), String(idSection));
+  let titleCategory = document.querySelector("#"+String(idSection)+ " h2");
+  titleCategory.innerHTML = titleCategory.firstChild.data+" - Catégorie "+String(genreMovie);
 }
 
-async function manageCat2Movie () {
-  extract_7_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score&genre=Western", "cat2")
-}
-
-async function manageCat3Movie () {
-  extract_7_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score&genre=Comedy", "cat3")
-}
-
-
-async function main () {
-  extract_8_best_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score")
-  manageCat1Movie();
-  manageCat2Movie();
-  manageCat3Movie();
-}
-
-main()
