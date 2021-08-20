@@ -1,7 +1,7 @@
-let adresseServeur = "http://193.26.22.227:8000/";
+let adresseServeur = "http://localhost:8000/";
 
 async function main () {
-  extract_8_best_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score")
+  //extract_8_best_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score")
   manageCategoryMovie("Fantasy", "cat1");
   manageCategoryMovie("Western", "cat2");
   manageCategoryMovie("Comedy", "cat3");
@@ -9,6 +9,7 @@ async function main () {
 
 main()
 
+/* _________________________ FETCH _________________________ */
 
 function addInfoBestMovie(urlBestMovie) {
   fetch(urlBestMovie)
@@ -83,6 +84,7 @@ function extract_7_movies(url, categorie) {
     })
     .then(function(value) {
       moviesIntoCarrousel("#"+categorie+"_movies", myList);
+      addSliderIntoDiv("#"+categorie+"_movies");
     })
   });
 };
@@ -92,22 +94,39 @@ function addMovieIntoIdDiv(idDivCarrousel, urlMovie, indexMovie){
   .then(function(res) {
     if (res.ok) {return res.json();}})
   .then(function(value) {
-    let divMovie = document.querySelector(idDivCarrousel+String(indexMovie));
-    let movieImg = document.querySelector(idDivCarrousel+String(indexMovie)+" div");
+    let divCarrouselSectionMovie = document.querySelector(idDivCarrousel+ " .carrousel");
+    let divMovie = document.createElement("div");
+    divMovie.classList.add(idDivCarrousel+"__carrouselItem");
+    divMovie.setAttribute("id", idDivCarrousel+String(indexMovie));
+    divCarrouselSectionMovie.appendChild(divMovie);
+    let movieImg = document.createElement("div");
+    divMovie.appendChild(movieImg);
+    let divModal = document.createElement("div");
+    divModal.classList.add("modal");
+    divMovie.appendChild(divModal);
+    divModalContent = document.createElement("div");
+    divModalContent.classList.add("modal-content");
+    spanBtn = document.createElement("span");
+    spanBtn.innerHTML = "&times;";
+    spanBtn.classList.add("btn_close");
+    divModalContent.appendChild(spanBtn);
+    let elementH2Modal = document.createElement("h2");
+    divModalContent.appendChild(elementH2Modal)
+    let divIncludeModal = document.createElement("div")
+    divIncludeModal.classList.add("include-modal")
+    divModalContent.appendChild(divIncludeModal)
+    divModal.appendChild(divModalContent);
+    
     let titleImg = String(value.title);
     movieImg.innerHTML = "<img src="+value.image_url+ " alt="+ titleImg + " title="+ titleImg + "/>";
     movieImg.setAttribute("id", idDivCarrousel.replace("#","")+"img_movie"+String(indexMovie));
     divMovie.appendChild(movieImg);
-    let newDivMovieMainModal = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal");
-    let newDivMovieMainModalContentH2 = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal-content h2");
-    let newDivMovieMainModalContentInclude = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal-content .include-modal");
-    let btnExit = document.querySelector(idDivCarrousel+String(indexMovie)+" .modal-content .btn_close");
     let DivModalLeft = document.createElement("div");
     DivModalLeft.classList.add(idDivCarrousel+"modalLeftMovie"+String(indexMovie));
     let DivModalRight = document.createElement("div");
     DivModalRight.classList.add(idDivCarrousel+"modalRightMovie"+String(indexMovie));
-    newDivMovieMainModalContentH2.innerHTML = value.title;
-    newDivMovieMainModalContentInclude.appendChild(DivModalLeft);
+    elementH2Modal.innerHTML = value.title;
+    divIncludeModal.appendChild(DivModalLeft);
     let ActorsMovie = "";
     for (let actor of value.actors) {ActorsMovie += actor + ", "};
     let InfosDivModalLeft = "<ul><li>Genres : " + value.genres +
@@ -122,20 +141,20 @@ function addMovieIntoIdDiv(idDivCarrousel, urlMovie, indexMovie){
                   + "<li>Description : " + value.long_description + "</li>"
                   +"</ul>";
     DivModalLeft.innerHTML = InfosDivModalLeft;
-    newDivMovieMainModalContentInclude.appendChild(DivModalRight);
+    divIncludeModal.appendChild(DivModalRight);
     imgMovie = document.createElement('div');
     imgMovie.innerHTML = "<img src="+value.image_url+"/>";
     DivModalRight.appendChild(imgMovie);
     let btnModal = document.querySelector(idDivCarrousel+"img_movie"+String(indexMovie))
     btnModal.addEventListener('click', function() {
-      newDivMovieMainModal.style.display = "block"
+      divModal.style.display = "block"
       });
-    btnExit.addEventListener('click', function() {
-      newDivMovieMainModal.style.display = "none"
+    spanBtn.addEventListener('click', function() {
+      divModal.style.display = "none"
     });
     window.addEventListener('click', function(event) {
-      if (event.target == newDivMovieMainModal) {
-        newDivMovieMainModal.style.display = "none";}
+      if (event.target == divMovie) {
+        divModal.style.display = "none";}
     });
   });  
 };
@@ -214,3 +233,64 @@ async function manageCategoryMovie (genreMovie, idSection) {
   titleCategory.innerHTML = titleCategory.firstChild.data+" - Catégorie "+String(genreMovie);
 }
 
+/*_________________________ CARROUSEL _________________________________*/
+function modifVisibleSlide (idDiv, indexFirstMovie, numberMovies, slidesVisible ) {
+  let childrenCarrouselDiv = document.querySelectorAll("."+idDiv.replace("#","")+"__carrouselItem")
+  let slidesToScroll = numberMovies
+  let myListMovies = Array.from(Array(numberMovies).keys())
+  let position = indexFirstMovie
+  while (Math.abs(position)>numberMovies) {
+      if (Math.abs(position) % numberMovies == 0) {position = 0}
+      else {position = Math.abs(position) % numberMovies}
+  }
+  i=0
+  while (i < slidesToScroll) {
+      
+      if (slidesVisible > 0) {
+          if ((position+i)<0) {
+              childrenCarrouselDiv[myListMovies.length - Math.abs(position+i)].style.display = "block"
+              slidesVisible--
+          } else if ((position+i)>=slidesToScroll) {
+              childrenCarrouselDiv[myListMovies[(position+i-slidesToScroll)]].style.display = "block"
+              slidesVisible--
+          } else {
+              childrenCarrouselDiv[myListMovies[position+i]].style.display = "block"
+              slidesVisible--
+          }
+      }
+      i++;
+  }
+}
+
+function eraseVisibleSlide (idDiv, numberMovies) {
+  let childrenCarrouselDiv = document.querySelectorAll("."+idDiv.replace("#","")+"__carrouselItem")
+  let slidesToScroll = numberMovies
+  let range = Array.from(Array(numberMovies).keys())
+  
+  for (let movie of range) {
+      childrenCarrouselDiv[movie].style.display = "none"
+  }   
+}
+
+function addSliderIntoDiv (idDiv, numberMovies = 7, slidesVisible = 4) {
+  document.addEventListener ('DOMContentLoaded', function() {
+  
+  
+  let btnLeft = document.querySelectorAll(idDiv + " .btn_carrousel")[0]
+  let btnRight = document.querySelectorAll(idDiv + " .btn_carrousel")[1]
+  let position = 0
+  eraseVisibleSlide(idDiv, numberMovies)
+  modifVisibleSlide(idDiv, position, numberMovies, slidesVisible)
+
+  btnLeft.addEventListener('click', function() {
+      eraseVisibleSlide(idDiv, numberMovies)
+      position--
+      modifVisibleSlide(idDiv, position, numberMovies, slidesVisible)
+    });
+  btnRight.addEventListener('click', function() {
+      eraseVisibleSlide(idDiv, numberMovies)
+      position++
+      modifVisibleSlide(idDiv, position, numberMovies, slidesVisible)
+    }); 
+  })
+}

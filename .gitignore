@@ -131,3 +131,11 @@ dmypy.json
 /EXPORT_PDF/
 /test/
 /base_sql.db
+.idea/.gitignore
+.idea/misc.xml
+.idea/modules.xml
+.idea/OCR_P6.iml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/inspectionProfiles/profiles_settings.xml
+.idea/inspectionProfiles/Project_Default.xml
