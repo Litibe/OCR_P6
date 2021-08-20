@@ -171,6 +171,13 @@ header div.row nav ul li a:hover {
 .container #title h1 {
   padding-top: 15px;
 }
+.container .column {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  flex-wrap: wrap;
+}
 .container section {
   width: 100%;
   background-color: rgba(245, 226, 199, 0.938);

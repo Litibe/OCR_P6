@@ -15,6 +15,9 @@
             padding-top: 15px;
         }
     }
+    .column{
+        @include flexrow_space_around;
+    }
     section{
         width: 100%;
         background-color: rgba(245, 226, 199, 0.938);
@@ -90,6 +93,8 @@
 .row{
     @include flexrow_space_around;
 };
+
+
 
 .modal{
     display: none; 

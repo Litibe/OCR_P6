@@ -1,7 +1,7 @@
 let adresseServeur = "http://localhost:8000/";
 
 async function main () {
-  //extract_8_best_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score")
+  extract_8_best_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score")
   manageCategoryMovie("Fantasy", "cat1");
   manageCategoryMovie("Western", "cat2");
   manageCategoryMovie("Comedy", "cat3");
@@ -16,23 +16,18 @@ function addInfoBestMovie(urlBestMovie) {
   .then(function(res) {if(res.ok){return res.json()};})
   .then(function(value) {
     let movieTitle = document.querySelector(
-      "#best_movie0 .title_movie");
+      "#best_movie .title_movie");
     let movieResume = document.querySelector(
-      "#best_movie0 .movieDetails .resume");
-    let movieBtnInfo = document.querySelector(
-      "#best_movie0 .movieDetails button");
+      "#best_movie .movieDetails .resume");
     let movieScoreImdb = document.querySelector(
-      "#best_movie0 .movieDetails p.note");
+      "#best_movie .movieDetails p.note");
     movieTitle.innerHTML = value.title;
-    movieBtnInfo.classList.remove("hidden");
     movieResume.innerHTML = "Résume du film : ";
     movieScoreImdb.innerHTML = "Note du film : "+value.imdb_score;
     let movieLongDescription = document.querySelector(
-      "#best_movie0 .movieDetails p.long_description");
+      "#best_movie .movieDetails p.long_description");
     movieLongDescription.innerHTML = "<p> "+String(value.long_description)+"</p>"; 
-    let newDivMovieMainModal = document.querySelector("#best_movie0 .modal");
-    movieBtnInfo.addEventListener("click", function() {
-      newDivMovieMainModal.style.display = "block";});
+    
   });
 }
 
@@ -94,11 +89,12 @@ function addMovieIntoIdDiv(idDivCarrousel, urlMovie, indexMovie){
   .then(function(res) {
     if (res.ok) {return res.json();}})
   .then(function(value) {
-    let divCarrouselSectionMovie = document.querySelector(idDivCarrousel+ " .carrousel");
+    let divCarrouselSectionMovie = document.querySelector(idDivCarrousel+ " .carrousel")
     let divMovie = document.createElement("div");
     divMovie.classList.add(idDivCarrousel+"__carrouselItem");
     divMovie.setAttribute("id", idDivCarrousel+String(indexMovie));
     divCarrouselSectionMovie.appendChild(divMovie);
+
     let movieImg = document.createElement("div");
     divMovie.appendChild(movieImg);
     let divModal = document.createElement("div");
@@ -153,9 +149,18 @@ function addMovieIntoIdDiv(idDivCarrousel, urlMovie, indexMovie){
       divModal.style.display = "none"
     });
     window.addEventListener('click', function(event) {
-      if (event.target == divMovie) {
+      if (event.target == divModal) {
         divModal.style.display = "none";}
     });
+    try {
+      let btnInfoMovie = document.querySelector(idDivCarrousel+" .movieDetails button");
+      btnInfoMovie.style.display = "block";
+
+      btnInfoMovie.addEventListener('click', function() {
+        divModal.style.display = "block"
+        });
+    } catch (error) {
+    }
   });  
 };
 
@@ -229,7 +234,7 @@ function moviesIntoCarrousel(idDivCarrousel, MoviesList) {
 
 async function manageCategoryMovie (genreMovie, idSection) {
   extract_7_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score&genre="+String(genreMovie), String(idSection));
-  let titleCategory = document.querySelector("#"+String(idSection)+ " h2");
+  let titleCategory = document.querySelector("#"+String(idSection)+"_movies h2");
   titleCategory.innerHTML = titleCategory.firstChild.data+" - Catégorie "+String(genreMovie);
 }
 

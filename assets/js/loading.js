@@ -1,7 +1,7 @@
 /* -------------------------------- LOADING --------------------------------  */
 function onReady(callback) {
     var intervalId = window.setInterval(function() {
-      if (document.getElementsByTagName('section')[0] !== undefined) {
+      if (document.getElementById('best_movies7') !== undefined) {
         window.clearInterval(intervalId);
         callback.call(this);
       }
@@ -13,7 +13,6 @@ function onReady(callback) {
   }
   
   onReady(function() {
-    setVisible('.page', true);
     setVisible('#loading', false);
   });
   /* -------------------------------- END LOADING --------------------------------  */
