@@ -111,13 +111,10 @@
     
     .modal-content {
         background-color: $background_color_footer;
-        position: absolute;
-        left: 10%;
-        top: -23%;
-        margin: 15% auto; 
-        padding: 20px;
+        margin: 5% auto; 
+        padding: 10px;
         border: 1px solid #888;
-        width: 80%;
+        width: 85%;
         color: $color_text_modal;
         .include-modal {
             @include flexrow_space_around;
