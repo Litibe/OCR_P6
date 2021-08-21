@@ -58,6 +58,9 @@ function extract_8_best_movies(url) {
     .then(function(value){
       moviesIntoCarrousel("#best_movies", value);
     })
+    .then(function(value) {
+      addSliderIntoDiv("#best_movies");
+    })
   });
 };
 
@@ -79,21 +82,20 @@ function extract_7_movies(url, categorie) {
     })
     .then(function(value) {
       moviesIntoCarrousel("#"+categorie+"_movies", myList);
+    })
+    .then(function(value) {
       addSliderIntoDiv("#"+categorie+"_movies");
     })
   });
 };
+
 
 function addMovieIntoIdDiv(idDivCarrousel, urlMovie, indexMovie){
   fetch(String(urlMovie))
   .then(function(res) {
     if (res.ok) {return res.json();}})
   .then(function(value) {
-    let divCarrouselSectionMovie = document.querySelector(idDivCarrousel+ " .carrousel")
-    let divMovie = document.createElement("div");
-    divMovie.classList.add(idDivCarrousel+"__carrouselItem");
-    divMovie.setAttribute("id", idDivCarrousel+String(indexMovie));
-    divCarrouselSectionMovie.appendChild(divMovie);
+    let divMovie = document.getElementById(idDivCarrousel.replace("#","")+String(indexMovie));
 
     let movieImg = document.createElement("div");
     divMovie.appendChild(movieImg);
@@ -277,10 +279,8 @@ function eraseVisibleSlide (idDiv, numberMovies) {
   }   
 }
 
-function addSliderIntoDiv (idDiv, numberMovies = 7, slidesVisible = 4) {
-  document.addEventListener ('DOMContentLoaded', function() {
-  
-  
+
+function addSliderIntoDiv (idDiv, numberMovies=7, slidesVisible=4) {
   let btnLeft = document.querySelectorAll(idDiv + " .btn_carrousel")[0]
   let btnRight = document.querySelectorAll(idDiv + " .btn_carrousel")[1]
   let position = 0
@@ -297,5 +297,5 @@ function addSliderIntoDiv (idDiv, numberMovies = 7, slidesVisible = 4) {
       position++
       modifVisibleSlide(idDiv, position, numberMovies, slidesVisible)
     }); 
-  })
-}
+  }
+

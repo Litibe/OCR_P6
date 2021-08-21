@@ -1,7 +1,7 @@
 /* -------------------------------- LOADING --------------------------------  */
 function onReady(callback) {
     var intervalId = window.setInterval(function() {
-      if (document.getElementById('best_movies7') !== undefined) {
+      if (document.querySelector("#best_movie_img_movie0") !== undefined) {
         window.clearInterval(intervalId);
         callback.call(this);
       }
