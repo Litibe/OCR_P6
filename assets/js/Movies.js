@@ -115,8 +115,9 @@ function addMovieIntoIdDiv(idDivCarrousel, urlMovie, indexMovie){
     divModalContent.appendChild(divIncludeModal)
     divModal.appendChild(divModalContent);
     
-    let titleImg = String(value.title);
-    movieImg.innerHTML = "<img src="+value.image_url+ " alt="+ titleImg + " title="+ titleImg + "/>";
+    let titleImg = String(value["title"]);
+    titleImg = titleImg.replace(" ", "")
+    movieImg.innerHTML = "<img src="+value.image_url+ " alt="+ (titleImg)+ "/>";
     movieImg.setAttribute("id", idDivCarrousel.replace("#","")+"img_movie"+String(indexMovie));
     divMovie.appendChild(movieImg);
     let DivModalLeft = document.createElement("div");

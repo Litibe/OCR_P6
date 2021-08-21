@@ -2,6 +2,7 @@
 
 .page{
     @include flexrow_center_center;
+    margin: auto;
 }
 
 .container{
