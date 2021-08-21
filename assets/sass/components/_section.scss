@@ -111,6 +111,9 @@
     
     .modal-content {
         background-color: $background_color_footer;
+        position: absolute;
+        left: 10%;
+        top: -23%;
         margin: 15% auto; 
         padding: 20px;
         border: 1px solid #888;
