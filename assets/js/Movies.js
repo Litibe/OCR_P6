@@ -1,13 +1,19 @@
 let adresseServeur = "http://localhost:8000/";
 
-async function main () {
+carrousselSlidesVisible = 4 ; 
+carrouselNumberMoviesPerCategories = 7 ; 
+myCategorie1 = "Fantasy"
+myCategorie2 = "Comedy"
+myCategorie3 = "Western"
+
+async function main (myCategorie1, myCategorie2, myCategorie3) {
   extract_8_best_movies(adresseServeur+"api/v1/titles/?sort_by=-imdb_score")
-  manageCategoryMovie("Fantasy", "cat1");
-  manageCategoryMovie("Western", "cat2");
-  manageCategoryMovie("Comedy", "cat3");
+  manageCategoryMovie(myCategorie1, "cat1");
+  manageCategoryMovie(myCategorie2, "cat2");
+  manageCategoryMovie(myCategorie3, "cat3");
 }
 
-main()
+main(myCategorie1, myCategorie2, myCategorie3)
 
 /* _________________________ FETCH _________________________ */
 
@@ -281,7 +287,10 @@ function eraseVisibleSlide (idDiv, numberMovies) {
 }
 
 
-function addSliderIntoDiv (idDiv, numberMovies=7, slidesVisible=4) {
+function addSliderIntoDiv (idDiv, 
+  numberMovies=carrouselNumberMoviesPerCategories,
+  slidesVisible=carrousselSlidesVisible
+  ) {
   let btnLeft = document.querySelectorAll(idDiv + " .btn_carrousel")[0]
   let btnRight = document.querySelectorAll(idDiv + " .btn_carrousel")[1]
   let position = 0
