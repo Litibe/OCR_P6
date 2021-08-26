@@ -24,7 +24,9 @@ git clone https://github.com/Litibe/OCR_P6.git
 Merci de se réferer au README du serveur concerné pour sa mise en place.
 [https://github.com/OpenClassrooms-Student-Center/OCMovies-API-EN-FR](https://github.com/OpenClassrooms-Student-Center/OCMovies-API-EN-FR)
 
-le fichier "OCR_P6/assets/js/Movies.js" peut-être modifier pour y intégrer l'adresse d'un serveur distant, par défaut, il se connectera au serveur BDD [http://localhost:8000/]("http://localhost:8000/")
+## Adresse du serveur "base de données" :
+le fichier "OCR_P6/assets/js/Movies.js" du repository peut-être modifié pour y intégrer l'adresse d'un serveur distant.
+Par défaut, il se connectera au serveur BDD en local sur votre machine[http://localhost:8000/](http://localhost:8000)
 
 
 ***
