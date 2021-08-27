@@ -1,163 +1,246 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta autor="Lionel TISSIER">
-    <link rel="shortcut icon" href="./assets/img/favicon.ico">
-    <link rel="apple-touch-icon" href="./assets/img/favicon.ico">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Rubik">
-    <link rel="stylesheet" href="./assets/css/style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta autor="Lionel TISSIER" />
+    <link rel="shortcut icon" href="./assets/img/favicon.ico" />
+    <link rel="apple-touch-icon" href="./assets/img/favicon.ico" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Rubik"
+    />
+    <link rel="stylesheet" href="./assets/css/style.css" />
     <title>JustStreamIt! - Tu ne sais pas quoi regarder ?</title>
-</head>
-<body>
+  </head>
+  <body>
     <header>
-        <div class="row">
-            <div class="logo">
-                <img src="./assets/img/logo_just_stream_it_white.png"
-                    alt="Logo Just Stream It"
-                    title='Logo de "Just Stream It"'
-                    />
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#title">Accueil</a></li>
-                    <li><a href="#cat1_movies">Catégories</a></li>
-                </ul>
-            </nav>
+      <div class="row">
+        <div class="logo">
+          <img
+            src="./assets/img/logo_just_stream_it_white.png"
+            alt="Logo Just Stream It"
+            title='Logo de "Just Stream It"'
+          />
         </div>
+        <nav>
+          <ul>
+            <li><a href="#title">Accueil</a></li>
+            <li><a href="#cat1_movies">Catégories</a></li>
+          </ul>
+        </nav>
+      </div>
     </header>
-<br/>
+    <br />
     <div class="container page">
-        <div id="title">
-            <h1 >JustStreamIt! - Tu ne sais pas quoi regarder ? </h1>
+      <div id="title">
+        <h1>JustStreamIt! - Tu ne sais pas quoi regarder ?</h1>
+      </div>
+      <!-- MOVIE STAR -->
+      <section id="the_movie">
+        <h2>Le Film le mieux noté & le plus voté</h2>
+        <div id="best_movie" class="container">
+          <div class="column p5">
+            <div class="movieDetails">
+              <h3 class="title_movie">
+                Impossible de se connecter au serveur.
+              </h3>
+              <p class="note"></p>
+              <button
+                class="btn_info_movie btn_margin_auto hidden"
+                type="button"
+              >
+                Plus d'informations
+              </button>
+              <h4 class="resume"></h4>
+              <p class="long_description"></p>
+            </div>
+            <div class="carrousel">
+              <div class="best_movie__carrouselItem" id="best_movie0"></div>
+            </div>
+          </div>
         </div>
-        <!-- MOVIE STAR -->
-        <section id="the_movie">
-            <h2>Le Film le mieux noté & le plus voté</h2>
-                <div id="best_movie" class="container">
-                    <div class="column p5">
-                        <div class="movieDetails">
-                            <h3 class="title_movie">Impossible de se connecter au serveur.</h3>
-                            <p class="note"></p>
-                            <button class="btn_info_movie btn_margin_auto hidden" type="button">Plus d'informations</button>
-                            <h4 class="resume"></h4>
-                            <p class='long_description'></p>
-                        </div>
-                        <div class="carrousel">
-                            <div class="best_movie__carrouselItem" id="best_movie0"></div>
-                        </div>
-                    </div>
-                </div>
-        </section>
+      </section>
 
-        <section id="best_movies">
-            <h2>Les 7 Films les mieux notés </h2>
-            <div class="row p5">
-                <div class="btn_carrousel">
-                    <svg class="btn_carrousel_left" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
-                  </svg>
-                </div>
-                <div class="carrousel">
-                    <div class="best_movies__carrouselItem" id="best_movies1"></div>
-                    <div class="best_movies__carrouselItem" id="best_movies2"></div>
-                    <div class="best_movies__carrouselItem" id="best_movies3"></div>
-                    <div class="best_movies__carrouselItem" id="best_movies4"></div>
-                    <div class="best_movies__carrouselItem" id="best_movies5"></div>
-                    <div class="best_movies__carrouselItem" id="best_movies6"></div>
-                    <div class="best_movies__carrouselItem" id="best_movies7"></div>
-                </div>  
-                <div class="btn_carrousel">
-                    <svg class="btn_carrousel_right" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
-                    </svg>
-                </div>
-            </div>
-        </section>
+      <section id="best_movies">
+        <h2>Les 7 Films les mieux notés</h2>
+        <div class="row p5">
+          <div class="btn_carrousel">
+            <svg
+              class="btn_carrousel_left"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"
+              />
+            </svg>
+          </div>
+          <div class="carrousel">
+            <div class="best_movies__carrouselItem" id="best_movies1"></div>
+            <div class="best_movies__carrouselItem" id="best_movies2"></div>
+            <div class="best_movies__carrouselItem" id="best_movies3"></div>
+            <div class="best_movies__carrouselItem" id="best_movies4"></div>
+            <div class="best_movies__carrouselItem" id="best_movies5"></div>
+            <div class="best_movies__carrouselItem" id="best_movies6"></div>
+            <div class="best_movies__carrouselItem" id="best_movies7"></div>
+          </div>
+          <div class="btn_carrousel">
+            <svg
+              class="btn_carrousel_right"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </section>
 
-        <!-- MOVIE CATEGORIE 1 -->
-        <section id="cat1_movies">
-            <h2>Les 7 Meilleurs Films</h2>
-            <div class="row p5">
-                <div class="btn_carrousel">
-                    <svg class="btn_carrousel_left" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
-                  </svg>
-                </div>
-                <div class="carrousel">
-                    <div class="cat1_movies__carrouselItem" id="cat1_movies1"></div>
-                    <div class="cat1_movies__carrouselItem" id="cat1_movies2"></div>
-                    <div class="cat1_movies__carrouselItem" id="cat1_movies3"></div>
-                    <div class="cat1_movies__carrouselItem" id="cat1_movies4"></div>
-                    <div class="cat1_movies__carrouselItem" id="cat1_movies5"></div>
-                    <div class="cat1_movies__carrouselItem" id="cat1_movies6"></div>
-                    <div class="cat1_movies__carrouselItem" id="cat1_movies7"></div>
-                </div>  
-                <div class="btn_carrousel">
-                    <svg class="btn_carrousel_right" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
-                    </svg>
-                </div>
-            </div>
-        </section>
+      <!-- MOVIE CATEGORIE 1 -->
+      <section id="cat1_movies">
+        <h2>Les 7 Meilleurs Films</h2>
+        <div class="row p5">
+          <div class="btn_carrousel">
+            <svg
+              class="btn_carrousel_left"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"
+              />
+            </svg>
+          </div>
+          <div class="carrousel">
+            <div class="cat1_movies__carrouselItem" id="cat1_movies1"></div>
+            <div class="cat1_movies__carrouselItem" id="cat1_movies2"></div>
+            <div class="cat1_movies__carrouselItem" id="cat1_movies3"></div>
+            <div class="cat1_movies__carrouselItem" id="cat1_movies4"></div>
+            <div class="cat1_movies__carrouselItem" id="cat1_movies5"></div>
+            <div class="cat1_movies__carrouselItem" id="cat1_movies6"></div>
+            <div class="cat1_movies__carrouselItem" id="cat1_movies7"></div>
+          </div>
+          <div class="btn_carrousel">
+            <svg
+              class="btn_carrousel_right"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </section>
 
-        <!-- MOVIE CATEGORIE 2 -->
-        <section id="cat2_movies">
-            <h2>Les 7 Meilleurs Films</h2>
-            <div class="row p5">
-                <div class="btn_carrousel">
-                    <svg class="btn_carrousel_left" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
-                  </svg>
-                </div>
-                <div class="carrousel">
-                    <div class="cat2_movies__carrouselItem" id="cat2_movies1"></div>
-                    <div class="cat2_movies__carrouselItem" id="cat2_movies2"></div>
-                    <div class="cat2_movies__carrouselItem" id="cat2_movies3"></div>
-                    <div class="cat2_movies__carrouselItem" id="cat2_movies4"></div>
-                    <div class="cat2_movies__carrouselItem" id="cat2_movies5"></div>
-                    <div class="cat2_movies__carrouselItem" id="cat2_movies6"></div>
-                    <div class="cat2_movies__carrouselItem" id="cat2_movies7"></div>
-                </div>  
-                <div class="btn_carrousel">
-                    <svg class="btn_carrousel_right" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
-                    </svg>
-                </div>
-            </div>
-        </section>
+      <!-- MOVIE CATEGORIE 2 -->
+      <section id="cat2_movies">
+        <h2>Les 7 Meilleurs Films</h2>
+        <div class="row p5">
+          <div class="btn_carrousel">
+            <svg
+              class="btn_carrousel_left"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"
+              />
+            </svg>
+          </div>
+          <div class="carrousel">
+            <div class="cat2_movies__carrouselItem" id="cat2_movies1"></div>
+            <div class="cat2_movies__carrouselItem" id="cat2_movies2"></div>
+            <div class="cat2_movies__carrouselItem" id="cat2_movies3"></div>
+            <div class="cat2_movies__carrouselItem" id="cat2_movies4"></div>
+            <div class="cat2_movies__carrouselItem" id="cat2_movies5"></div>
+            <div class="cat2_movies__carrouselItem" id="cat2_movies6"></div>
+            <div class="cat2_movies__carrouselItem" id="cat2_movies7"></div>
+          </div>
+          <div class="btn_carrousel">
+            <svg
+              class="btn_carrousel_right"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </section>
 
-        <!-- MOVIE CATEGORIE 3 -->
-        <section id="cat3_movies">
-            <h2>Les 7 Meilleurs Films</h2>
-            <div class="row p5">
-                <div class="btn_carrousel">
-                    <svg class="btn_carrousel_left" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"/>
-                  </svg>
-                </div>
-                <div class="carrousel">
-                    <div class="cat3_movies__carrouselItem" id="cat3_movies1"></div>
-                    <div class="cat3_movies__carrouselItem" id="cat3_movies2"></div>
-                    <div class="cat3_movies__carrouselItem" id="cat3_movies3"></div>
-                    <div class="cat3_movies__carrouselItem" id="cat3_movies4"></div>
-                    <div class="cat3_movies__carrouselItem" id="cat3_movies5"></div>
-                    <div class="cat3_movies__carrouselItem" id="cat3_movies6"></div>
-                    <div class="cat3_movies__carrouselItem" id="cat3_movies7"></div>
-                </div>  
-                <div class="btn_carrousel">
-                    <svg class="btn_carrousel_right" xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"/>
-                    </svg>
-                </div>
-            </div>
-        </section>
+      <!-- MOVIE CATEGORIE 3 -->
+      <section id="cat3_movies">
+        <h2>Les 7 Meilleurs Films</h2>
+        <div class="row p5">
+          <div class="btn_carrousel">
+            <svg
+              class="btn_carrousel_left"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-4.5-.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z"
+              />
+            </svg>
+          </div>
+          <div class="carrousel">
+            <div class="cat3_movies__carrouselItem" id="cat3_movies1"></div>
+            <div class="cat3_movies__carrouselItem" id="cat3_movies2"></div>
+            <div class="cat3_movies__carrouselItem" id="cat3_movies3"></div>
+            <div class="cat3_movies__carrouselItem" id="cat3_movies4"></div>
+            <div class="cat3_movies__carrouselItem" id="cat3_movies5"></div>
+            <div class="cat3_movies__carrouselItem" id="cat3_movies6"></div>
+            <div class="cat3_movies__carrouselItem" id="cat3_movies7"></div>
+          </div>
+          <div class="btn_carrousel">
+            <svg
+              class="btn_carrousel_right"
+              xmlns="http://www.w3.org/2000/svg"
+              width="32"
+              height="32"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </section>
     </div>
     <div id="loading"></div>
     <footer>
       <p>JustStreamIt! - Tous droits réservés -</p>
     </footer>
-</body>
-<script type="text/javascript" src="./assets/js/loading.js"></script>
-<script type="text/javascript" src="./assets/js/Movies.js"></script>
+  </body>
+  <script type="text/javascript" src="./assets/js/loading.js"></script>
+  <script type="text/javascript" src="./assets/js/Movies.js"></script>
 </html>
